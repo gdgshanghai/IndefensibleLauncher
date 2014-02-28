@@ -6,7 +6,10 @@
   "version": "0.1",
 
   "permissions": [
-    "https://www.getpostman.com/"
+    "https://www.getpostman.com/",
+    "http://www.google.com/",
+    "https://www.google.com/",
+    "http://www.google.com.hk/"
   ],
   "chrome_url_overrides": {
     "newtab": "index.html"
