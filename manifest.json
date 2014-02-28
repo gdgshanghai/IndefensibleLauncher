@@ -5,7 +5,9 @@
   "description": "Indefensible Launcher.",
   "version": "0.1",
 
-  "permissions": [],
+  "permissions": [
+    "https://www.getpostman.com/"
+  ],
   "chrome_url_overrides": {
     "newtab": "index.html"
   }
