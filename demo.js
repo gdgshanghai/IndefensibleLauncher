@@ -14,16 +14,40 @@ var currentTime = function() {
 };
 
 var displayTime = function() {
-  $('#current-time').text(currentTime());  
+    $('#current-time').text(currentTime());
 };
 
-var setHighlightByTime = function(time){
-        
+var setHighlightByTime = function(time) {
+
 }
 
+var getJson = function(url) {
+    $.ajax({
+        url: url
+    }).done(function(data) {
+        console.log(data);
+    }).fail(function(err) {
+        console.log(err);
+    });
+};
+
+var mockData = {
+    veneus: [{
+        title: 'title1',
+        url: 'http://www.google.com'
+    }, {
+        title: 'title2',
+        url: 'http://www.baidu.com'
+    }, {
+        title: 'title3',
+        url: 'http://www.bing.com'
+    }]
+};
+
 $(function() {
+    alert(mockData.veneus[1].url);
     displayTime();
-    $(".tab-switcher").click(function(){
+    $(".tab-switcher").click(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
