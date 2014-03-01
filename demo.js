@@ -9,12 +9,19 @@
 // }
 // xhr.send();
 
+var currentTime = function() {
+    return new Date();
+};
+
+var displayTime = function() {
+  $('#current-time').text(currentTime());  
+};
+
 $(function() {
-    //alert('jquery ok');
+    displayTime();
     $(".tab-switcher").click(function(){
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
-        //alert('ok ' + id);
     });
 });
