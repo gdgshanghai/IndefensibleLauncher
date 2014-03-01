@@ -67,7 +67,7 @@ var loadAppsByMode = function(mode) {
 var getMapFromHostList = function(hosts) {
     var map = {};
     for (var i = 0; i < hosts.length; i++) {
-        var c = hosts[i].charAt(0).toLowerCase();
+        var c = hosts[i].charAt(0).toUpperCase();
         if (typeof map[c] === 'undefined') {
             map[c] = [];
         }
@@ -117,15 +117,14 @@ $(function() {
         $('#' + id).show().siblings('.launcher-content').hide();
     });
     $('#tab-1').click(function() {
-        $('body').removeClass('none-bg');
         loadAppsByMode(MODE);
     });
     $('#tab-2').click(function() {
-        $('body').addClass('none-bg');
+        $('body').removeClass().addClass('yellow-bg');
         loadCategorizedApps();
     });
     $('#tab-3').click(function() {
-        $('body').addClass('none-bg');
+        $('body').removeClass().addClass('blue-bg');
         loadTopHost();
     });
     $('body').on('loadTopHost', function(e, data) {
@@ -135,12 +134,12 @@ $(function() {
         $.each(sortedHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                a += (' <a target="_blank" href="http://' + v[i] + '"">' + v[i] + '</a>');
+                a += (' <a class="icon-small" target="_blank" href="http://' + v[i] + '"">' + v[i] + '</a>');
             }
-            ulStr += ('<li>' + k + ': ' + a + '</li>');
+            ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
         });
         ulStr = '<ul>' + ulStr + '</ul>';
-        $('#launcher-3').html(ulStr);
+        $('#launcher-3 .left-block').html(ulStr);
     });
     $('body').on('loadCategorizedApps', function(e, data) {
         var topHosts = data,
@@ -153,9 +152,10 @@ $(function() {
             ulStr += ('<li>' + k + ': ' + a + '</li>');
         });
         ulStr = '<ul>' + ulStr + '</ul>';
-        $('#launcher-2').html(ulStr);
+        $('#launcher-2 .left-block').html(ulStr);
     });
     $('body').on('loadAppsByMode', function(e, data) {
+        $('body').removeClass().addClass(MODE + '-bg');
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
@@ -163,6 +163,7 @@ $(function() {
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
+
     });
 
     $('#mingdao-block').click(function() {
@@ -170,6 +171,8 @@ $(function() {
     });
 
     loadAppsByMode(MODE);
+
+    $('#tab-3').click(); // TODO
 
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {

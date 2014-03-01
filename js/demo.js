@@ -6,8 +6,8 @@ var initDemoTimeBox = function() {
     $('#current-button').text("现在是" + currentDisplayTime());
 };
 
-$(function(){
-    initDemoTimeBox();    
+$(function() {
+    initDemoTimeBox();
     $('.set-time').click(function() {
         var MAP = {
             'morning': '上午',
@@ -18,5 +18,6 @@ $(function(){
         MODE = id === 'night' ? 'home' : 'work';
         $('#current-button').text("现在是" + MAP[id]);
         refreshMode();
+        loadAppsByMode(MODE);
     });
 });
