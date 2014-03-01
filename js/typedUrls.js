@@ -1,5 +1,3 @@
-// Search history to find up to ten links that a user has typed in,
-// and show those links in a popup.
 function saveTopHost() {
   var microsecondsPerWeek = 1000 * 60 * 60 * 24 * 7;
   var oneWeekAgo = (new Date).getTime() - microsecondsPerWeek;
@@ -7,8 +5,8 @@ function saveTopHost() {
   var numRequestsOutstanding = 0;
 
   chrome.history.search({
-      'text': '', // Return every history item....
-      'startTime': oneWeekAgo // that was accessed less than one week ago.
+      'text': '',
+      'startTime': oneWeekAgo
     },
     function(historyItems) {
       for (var i = 0; i < historyItems.length; ++i) {
@@ -58,7 +56,22 @@ function saveTopHost() {
 
     var topHosts = urlArray.slice(0, 20);
     console.log(topHosts[0]);
+    saveToChrome(topHosts);
   };
+}
+
+var saveToChrome = function(data) {
+  var theValue = data;
+  if (!theValue) {
+    message('Error: No value specified');
+    return;
+  }
+  chrome.storage.sync.set({
+    'topHosts': theValue
+  }, function() {
+    // message('Settings saved');
+    console.log('save ok');
+  });
 }
 
 var getHost = function(url) {
