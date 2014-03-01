@@ -56,7 +56,8 @@ var displayTime = function() {
 };
 
 var setHighlightByMode = function(mode) {
-
+    $('.context-mode-title#' + mode).addClass('current')
+        .siblings('.context-mode-title').removeClass('current');
 }
 
 var getJson = function(url) {
