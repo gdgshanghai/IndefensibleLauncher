@@ -96,14 +96,16 @@ $(function() {
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
     });
+    $('#tab-1').click(function() {
+        $('body').removeClass('none-bg');
+        // loadCategorizedApps();
+    });
     $('#tab-2').click(function() {
-        $('body').css('background', 'none');
-        $('.main-content').css('background', 'none');
+        $('body').addClass('none-bg');
         loadCategorizedApps();
     });
     $('#tab-3').click(function() {
-        $('body').css('background', 'none');
-        $('.main-content').css('background', 'none');
+        $('body').addClass('none-bg');
         loadTopHost();
     });
     $('body').on('loadTopHost', function(e, data) {
