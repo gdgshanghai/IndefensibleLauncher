@@ -30,7 +30,7 @@ var refreshMode = function() {
 };
 
 var displayTime = function() {
-    $('#current-time').text(currentTime());
+    $('#current-time').text(currentDisplayTime());
 };
 
 var setHighlightByMode = function(mode) {

@@ -1,6 +1,10 @@
+var currentDisplayTime = function() {
+    return currentTime().getHours() + ":" + currentTime().getMinutes();
+};
+
 var initDemoTimeBox = function() {
-    $('#current-button').text("现在是" + currentTime().getHours() + ":" + currentTime().getMinutes());
-}
+    $('#current-button').text("现在是" + currentDisplayTime());
+};
 
 $(function(){
     initDemoTimeBox();    

@@ -1,5 +1,10 @@
+html {
+    height: 100%;
+}
 body {
-    background-color: red;
+    background: url("../images/bg.png") no-repeat;
+    margin: 0;
+    padding: 0;
 }
 
 .launcher-content {
@@ -9,9 +14,60 @@ body {
     }
 }
 
-.context-mode-title {
+.mode-wrapper {
+    //background-color: white;
+    position: absolute;
+    height: 240px;
+    width: 120px;
+    top: 50%;
+    margin-top: -180px;
+    .context-mode-title {
+        &.mode-work {
+            background: url("../images/modework.png") no-repeat left top;
+            background-color: rgba(255,255,255,0.5);            
+        }
+        &.mode-home {
+            background: url("../images/modehome.png") no-repeat left top;
+            background-color: rgba(255,255,255,0.5);            
+        }
+        &.current {
+            background-color: white;
+        }
+        width: 100%;
+        height: 120px;
+    }
+}
+
+.main-content {
+    background-color: rgba(0,0,0,0.2);
+    width: 850px;
+    margin: 0 auto;
+    height: 786px;
+}
+
+.bottom-part {
+    background: url("../images/launcher.png") no-repeat;
+    position: fixed;
+    bottom: 0px;
+    height: 60px;
     background-color: white;
-    &.current {
-        background-color: yellow;
+    width: 100%;
+    .tab-holder {
+        width: 500px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 0px;
+        .tab-switcher {
+            width: 78px;
+            height: 20px;
+            border-top: 5px solid #d5d7d6;
+            display: inline-block;
+            margin: 0 10px;
+            margin-top: 15px;
+            &:hover {
+                border-top-color: #7d7d7d;
+                cursor: pointer;
+            }
+        }
     }
 }
