@@ -151,7 +151,7 @@ $(function() {
         $('#launcher-1').html(ulStr);
     });
 
-    $('#tab-2').click();
+    loadAppsByMode(MODE);
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
     //     console.log('fire onLocationUpdate');
