@@ -72,7 +72,7 @@ var saveToChrome = function(data) {
     // message('Settings saved');
     console.log('save ok');
   });
-}
+};
 
 var getHost = function(url) {
   var host = "null";

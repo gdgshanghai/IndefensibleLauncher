@@ -48,6 +48,12 @@ var getJson = function(url) {
     });
 };
 
+var loadTopHost = function() {
+    chrome.storage.sync.get('topHosts', function(data) {
+        $('body').trigger('loadTopHost', data);
+    });
+};
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
@@ -57,5 +63,18 @@ $(function() {
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
     });
+    $('#tab-3').click(function() {
+        $('body').css('background', 'none');
+        $('.main-content').css('background', 'none');
+        loadTopHost();
+    });
+    $('body').on('loadTopHost', function(e, data) {
+        var topHosts = data.topHosts,
+            ulStr = '';
+        for (var i = 0; i < topHosts.length; i++) {
+            ulStr += ('<li>' + topHosts[i] + '</li>');
+        }
+        ulStr = '<ul>' + ulStr + '</ul>';
+        $('#launcher-3').html(ulStr);
+    })
 });
-
