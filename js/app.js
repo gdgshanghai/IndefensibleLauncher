@@ -58,6 +58,12 @@ var loadCategorizedApps = function() {
     $('body').trigger('loadCategorizedApps', mockdata.category);
 };
 
+var loadAppsByMode = function(mode) {
+    $('body').trigger('loadAppsByMode', {
+        apps: mockdata.category[mode]
+    });
+};
+
 var getMapFromHostList = function(hosts) {
     var map = {};
     for (var i = 0; i < hosts.length; i++) {
@@ -98,7 +104,7 @@ $(function() {
     });
     $('#tab-1').click(function() {
         $('body').removeClass('none-bg');
-        // loadCategorizedApps();
+        loadAppsByMode(MODE);
     });
     $('#tab-2').click(function() {
         $('body').addClass('none-bg');
@@ -125,7 +131,6 @@ $(function() {
     $('body').on('loadCategorizedApps', function(e, data) {
         var topHosts = data,
             ulStr = '';
-        // var sortedHosts = sortObjectByKey(getMapFromHostList(topHosts))
         $.each(topHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {
@@ -136,6 +141,16 @@ $(function() {
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-2').html(ulStr);
     });
+    $('body').on('loadAppsByMode', function(e, data) {
+        var apps = data.apps;
+        var ulStr = '';
+        for (var i = 0; i < apps.length; i++) {
+            ulStr += ('<li><a target="_blank" href="http://' + apps[i] + '"">' + apps[i] + '</a></li>');
+        }
+        ulStr = '<ul>' + ulStr + '</ul>';
+        $('#launcher-1').html(ulStr);
+    });
+
     $('#tab-2').click();
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
