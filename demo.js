@@ -87,10 +87,15 @@ var mockData = {
     }]
 };
 
+var initDemoTimeBox = function() {
+    $('#current-button').text("现在是" + currentTime().getHours() + ":" + currentTime().getMinutes());
+}
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
     displayTime();
+    initDemoTimeBox();
     $(".tab-switcher").click(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
