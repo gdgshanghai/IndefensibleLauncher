@@ -10,7 +10,6 @@
 // xhr.send();
 
 var MODE;
-var TIME;
 
 var currentTime = function() {
     return new Date();
@@ -89,6 +88,8 @@ var mockData = {
 };
 
 $(function() {
+    MODE = getMode(currentTime());
+    refreshMode();
     displayTime();
     $(".tab-switcher").click(function() {
         var id = $(this).attr('id');
