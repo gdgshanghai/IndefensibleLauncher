@@ -10,6 +10,7 @@
 // xhr.send();
 
 var MODE;
+var TIME;
 
 var currentTime = function() {
     return new Date();
@@ -23,7 +24,11 @@ var getMode = function(time) {
         return 'work';
     }
     return 'default';
-}
+};
+
+var refreshMode = function() {
+    setHighlightByMode(MODE);
+};
 
 var testGetMode = function() {
     var d = new Date(2014, 2, 1, 6);
@@ -89,5 +94,16 @@ $(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
+    });
+    $('.set-time').click(function() {
+        var MAP = {
+            'morning': '上午',
+            'afternoon': '下午',
+            'night': '晚上'
+        }
+        var id = $(this).attr('id');
+        MODE = id === 'night' ? 'home' : 'work';
+        $('#current-button').text("现在是" + MAP[id]);
+        refreshMode();
     });
 });
