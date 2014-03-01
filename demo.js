@@ -17,6 +17,10 @@ var displayTime = function() {
   $('#current-time').text(currentTime());  
 };
 
+var setHighlightByTime = function(time){
+        
+}
+
 $(function() {
     displayTime();
     $(".tab-switcher").click(function(){
