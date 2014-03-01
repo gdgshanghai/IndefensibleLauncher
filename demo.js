@@ -10,5 +10,11 @@
 // xhr.send();
 
 $(function() {
-    alert('jquery ok');
+    //alert('jquery ok');
+    $(".tab-switcher").click(function(){
+        var id = $(this).attr('id');
+        id = id.replace('tab', 'launcher');
+        $('#' + id).show().siblings('.launcher-content').hide();
+        //alert('ok ' + id);
+    });
 });
