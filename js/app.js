@@ -76,5 +76,10 @@ $(function() {
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-3').html(ulStr);
-    })
+    });
+    chrome.location.watchLocation('getLocation', {});
+    chrome.location.onLocationUpdate.addListener(function(position) {
+        console.log('fire onLocationUpdate');
+        console.log(JSON.stringify(position));
+    });
 });
