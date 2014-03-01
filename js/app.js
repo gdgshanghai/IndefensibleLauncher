@@ -54,6 +54,35 @@ var loadTopHost = function() {
     });
 };
 
+var getMapFromHostList = function(hosts) {
+    var map = {};
+    for (var i = 0; i < hosts.length; i++) {
+        var c = hosts[i].charAt(0).toLowerCase();
+        if (typeof map[c] === 'undefined') {
+            map[c] = [];
+        }
+        map[c].push(hosts[i]);
+    }
+    return map;
+};
+
+var sortObjectByKey = function(obj) {
+    var keys = [];
+    var sorted_obj = {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            keys.push(key);
+        }
+    }
+    keys.sort();
+
+    $.each(keys, function(i, key) {
+        var val = obj[key];
+        sorted_obj[key] = val;
+    });
+    return sorted_obj;
+};
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
@@ -71,15 +100,21 @@ $(function() {
     $('body').on('loadTopHost', function(e, data) {
         var topHosts = data.topHosts,
             ulStr = '';
-        for (var i = 0; i < topHosts.length; i++) {
-            ulStr += ('<li>' + topHosts[i] + '</li>');
-        }
+        var sortedHosts = sortObjectByKey(getMapFromHostList(topHosts))
+        $.each(sortedHosts, function(k, v) {
+            var a = '';
+            for (var i = 0; i < v.length; i++) {
+                a += (' <a target="_blank" href="http://' + v[i] + '"">' + v[i] + '</a>');
+            }
+            ulStr += ('<li>' + k + ': ' + a + '</li>');
+        });
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-3').html(ulStr);
     });
-    chrome.location.watchLocation('getLocation', {});
-    chrome.location.onLocationUpdate.addListener(function(position) {
-        console.log('fire onLocationUpdate');
-        console.log(JSON.stringify(position));
-    });
+    $('#tab-3').click();
+    // chrome.location.watchLocation('getLocation', {});
+    // chrome.location.onLocationUpdate.addListener(function(position) {
+    //     console.log('fire onLocationUpdate');
+    //     console.log(JSON.stringify(position));
+    // });
 });
