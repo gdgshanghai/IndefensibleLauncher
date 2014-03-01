@@ -93,6 +93,20 @@ var sortObjectByKey = function(obj) {
     return sorted_obj;
 };
 
+var openWindow = function(url) {
+    chrome.windows.create({
+        'url': url,
+        'type': 'popup'
+    }, function(window) {
+        var id = window.id;
+        chrome.windows.onRemoved.addListener(function(windowId) {
+            if (windowId === id) {
+                console.log(id + 'closed');
+            }
+        });
+    });
+}
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
@@ -148,10 +162,15 @@ $(function() {
             ulStr += ('<li><a target="_blank" href="http://' + apps[i] + '"">' + apps[i] + '</a></li>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
-        $('#launcher-1').html(ulStr);
+        $('#launcher-1 .apps').html(ulStr);
+    });
+
+    $('#mingdao-block').click(function() {
+        openWindow('http://google.com');
     });
 
     loadAppsByMode(MODE);
+
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
     //     console.log('fire onLocationUpdate');
