@@ -23,3 +23,7 @@ var testGetMode = function() {
     mode = getMode(d);
     console.log('17:01 ' + (mode === 'home'));
 };
+
+var testGetDianPingJson = function(){
+    getJson('http://192.168.2.165:8080/Membership-application/api/dianping/veneus');
+};
