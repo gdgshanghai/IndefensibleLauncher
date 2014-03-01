@@ -1,12 +1,13 @@
 function saveTopHost() {
-  var microsecondsPerWeek = 1000 * 60 * 60 * 24 * 7;
+  var microsecondsPerWeek = 12 * 1000 * 60 * 60 * 24 * 7;
   var oneWeekAgo = (new Date).getTime() - microsecondsPerWeek;
 
   var numRequestsOutstanding = 0;
 
   chrome.history.search({
       'text': '',
-      'startTime': oneWeekAgo
+      'startTime': oneWeekAgo,
+      'maxResults': 1000
     },
     function(historyItems) {
       for (var i = 0; i < historyItems.length; ++i) {
