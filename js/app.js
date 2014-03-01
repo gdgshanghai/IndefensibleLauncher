@@ -54,6 +54,10 @@ var loadTopHost = function() {
     });
 };
 
+var loadCategorizedApps = function() {
+    $('body').trigger('loadCategorizedApps', mockdata.category);
+};
+
 var getMapFromHostList = function(hosts) {
     var map = {};
     for (var i = 0; i < hosts.length; i++) {
@@ -92,6 +96,11 @@ $(function() {
         id = id.replace('tab', 'launcher');
         $('#' + id).show().siblings('.launcher-content').hide();
     });
+    $('#tab-2').click(function() {
+        $('body').css('background', 'none');
+        $('.main-content').css('background', 'none');
+        loadCategorizedApps();
+    });
     $('#tab-3').click(function() {
         $('body').css('background', 'none');
         $('.main-content').css('background', 'none');
@@ -111,7 +120,21 @@ $(function() {
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-3').html(ulStr);
     });
-    $('#tab-3').click();
+    $('body').on('loadCategorizedApps', function(e, data) {
+        var topHosts = data,
+            ulStr = '';
+        // var sortedHosts = sortObjectByKey(getMapFromHostList(topHosts))
+        $.each(topHosts, function(k, v) {
+            var a = '';
+            for (var i = 0; i < v.length; i++) {
+                a += (' <a target="_blank" href="http://' + v[i] + '"">' + v[i] + '</a>');
+            }
+            ulStr += ('<li>' + k + ': ' + a + '</li>');
+        });
+        ulStr = '<ul>' + ulStr + '</ul>';
+        $('#launcher-2').html(ulStr);
+    });
+    $('#tab-2').click();
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
     //     console.log('fire onLocationUpdate');
