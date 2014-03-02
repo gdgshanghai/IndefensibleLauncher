@@ -148,6 +148,7 @@ $(function() {
     $(".tab-switcher").click(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
+        $(this).addClass('current').siblings().removeClass('current');
         $('#' + id).show().siblings('.launcher-content').hide();
     });
     $('#tab-1').click(function() {
