@@ -65,7 +65,7 @@ var loadTopHost = function() {
 
 var loadCategorizedApps = function() {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        console.log("lokon"+data.topCategorizedApps);
+        console.log("lokon" + data.topCategorizedApps);
         $('body').trigger('loadCategorizedApps', data);
     });
 };
@@ -173,8 +173,8 @@ $(function() {
             var a = '';
             for (var i = 0; i < v.length; i++) {
                 // var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
-                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv/g, '') + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv/g, '') + '</span>';
+                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.jpg"></span>';
+                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
@@ -189,11 +189,11 @@ $(function() {
             ulStr = '';
         $.each(topHosts, function(k, v) {
             console.log(k);
-            console.log('v:'+v);
+            console.log('v:' + v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
                 var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
+                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             arrow_div = '<div class="arrow"></div>';
@@ -208,7 +208,7 @@ $(function() {
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
             var img = '<img src="http://' + apps[i] + '/favicon.ico">',
-                label = '<span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
+                label = '<span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
             ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + label + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
@@ -218,6 +218,7 @@ $(function() {
     $('body').on('mingdaoCookie', function(e, c) {
         if (c) {
             $('#mingdao-block').off('click');
+            $('#mingdao-block').removeClass('entrance');
             MINGDAO_ACCESSTOKEN = c.value;
             $.ajax({
                 url: 'https://api.mingdao.com/task/my_joined?access_token=' + MINGDAO_ACCESSTOKEN + '&format=json',
@@ -229,7 +230,7 @@ $(function() {
             $('#mingdao-block').on('click', function() {
                 openWindow('http://memberappwebservice.duapp.com/api/mingdao/index');
             });
-            $('#mingdao-block').text('Login Mingdao');
+            $('#mingdao-block').addClass('entrance');
         }
     });
 
