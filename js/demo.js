@@ -31,4 +31,8 @@ $(function() {
             console.log(err);
         });
     });
+
+    $("#morning").click(function(){
+        getCookie();
+    });
 });
