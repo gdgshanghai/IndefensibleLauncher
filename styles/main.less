@@ -217,6 +217,7 @@ body {
     text-decoration: none;
     margin-top: 18px;
     text-align: center;
+    vertical-align: top;
     .icon-small {
         @r: 60px;
         display: inline-block;
@@ -232,6 +233,19 @@ body {
         img {
             height: 60px;
             width: 60px;
+        }
+    }
+    .icon-add {
+        @r: 60px;
+        display: inline-block;
+        height: @r;
+        width: @r;
+        vertical-align: top;
+        margin: 0 25px 5px;
+        overflow: hidden;
+        img {
+            margin-top: 25px;
+            cursor: pointer;
         }
     }
     .icon-large {
