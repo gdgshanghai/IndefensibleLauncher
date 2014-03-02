@@ -134,14 +134,14 @@ $(function() {
         $.each(sortedHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                console.log(v[i]);
                 var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
                 var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
         });
-        ulStr = '<ul>' + ulStr + '</ul>';
+        var header = '<div class="li-header"><img class="AZ" src="images/AZ.png"/></div>'
+        ulStr = header + '<ul>' + ulStr + '</ul>';
         $('#launcher-3 .left-block').html(ulStr);
     });
     $('body').on('loadCategorizedApps', function(e, data) {
