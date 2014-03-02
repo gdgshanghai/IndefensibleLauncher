@@ -115,11 +115,14 @@ var openWindow = function(url) {
     });
 }
 
-var getCookie =function() {
-    chrome.cookies.get({url:"http://192.168.2.165:8080/Membership-application/api/dianping/accesstoken", name:"COOKIENAME"}, function(c) {
-    console.log(c);
-    // call mingdao in main UI
-})
+var getCookie = function() {
+    chrome.cookies.get({
+        url: "http://192.168.2.165:8080/Membership-application/api/dianping/accesstoken",
+        name: "COOKIENAME"
+    }, function(c) {
+        console.log(c);
+        // call mingdao in main UI
+    })
 }
 
 var getTodoList = function(accessToken) {
@@ -131,11 +134,10 @@ var getNearVenus = function(long, lat) {
     $.ajax({
         url: url,
         type: "GET",
-    }).done(function(data){
+    }).done(function(data) {
         console.log(data);
     });
 }
-
 
 
 
@@ -194,14 +196,12 @@ $(function() {
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
-            var icon = '<span class="icon-large"><img src="http://' + apps[i] + '/favicon.ico"></span>';
-            var label = '<br><span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
-            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '">' + icon + label + '</a>');
+            var img = '<img src="http://' + apps[i] + '/favicon.ico">',
+                label = '<span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
+            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + label + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
-
         $('#launcher-1 .apps').html(ulStr);
-
     });
 
     $('#mingdao-block').click(function() {
