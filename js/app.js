@@ -199,8 +199,6 @@ $(function() {
 
     loadAppsByMode(MODE);
 
-    $('#tab-3').click(); // TODO
-
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
     //     console.log('fire onLocationUpdate');
