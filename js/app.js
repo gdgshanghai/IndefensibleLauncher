@@ -71,7 +71,7 @@ var loadCategorizedApps = function() {
 
 var loadAppsByMode = function(mode) {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        console.log("abc:"+data.topCategorizedApps[mode]);
+        console.log("abc:" + data.topCategorizedApps[mode]);
         var a = data.topCategorizedApps[mode];
         $('body').trigger('loadAppsByMode', {
             apps: data.topCategorizedApps[mode]
@@ -155,7 +155,7 @@ $(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
         $(this).addClass('current').siblings().removeClass('current');
-        $('#' + id).show().siblings('.launcher-content').hide();
+        $('#' + id).show('slow').siblings('.launcher-content').hide();
     });
     $('#tab-1').click(function() {
         loadAppsByMode(MODE);
