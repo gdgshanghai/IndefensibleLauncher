@@ -57,7 +57,7 @@ body {
     background-color: rgba(0,0,0,0.2);
     height: 786px;
     width: 850px;
-    margin: 0 auto;   
+    margin: 0 auto;
 }
 
 #launcher-2, #launcher-3 {
@@ -83,6 +83,7 @@ body {
                     text-align: center;
                     color: #85b4d2;
                     font-family: Arial;
+                    vertical-align: top;
                 }
             }
         }
@@ -122,20 +123,30 @@ body {
     }
 }
 
-.icon-small {
-    @r: 60px;
+.icon-wrapper {
     display: inline-block;
-    height: @r;
-    width: @r;
-    border: 3px solid white;
-    border-radius: @r;
-    vertical-align: top;
+    text-decoration: none;
     margin-top: 18px;
-    margin-left: 32px;
-    overflow: hidden;
-    img {
-        height: 60px;
-        width: 60px;
+    text-align: center;
+    .icon-small {
+        @r: 60px;
+        display: inline-block;
+        height: @r;
+        width: @r;
+        border: 3px solid #85b4d2;
+        border-radius: @r;
+        vertical-align: top;
+        margin: 0 25px 5px;
+        overflow: hidden;
+        background-color: white;
+        img {
+            height: 60px;
+            width: 60px;
+        }
+    }
+    .icon-label {
+        color: white;
+        font-family: Arial;
     }
 }
 

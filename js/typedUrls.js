@@ -83,7 +83,7 @@ var getHost = function(url) {
   var match = url.match(regex);
   if (typeof match != "undefined" && null != match)
     host = match[1];
-  return host;
+  return host.replace('www.', '');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
