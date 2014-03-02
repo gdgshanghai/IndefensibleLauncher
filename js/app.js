@@ -34,9 +34,8 @@ var refreshMode = function() {
 var setMingdao = function(mode) {
     if (mode === 'home') {
         $('#mingdao-block').hide();
-    }
-    else {
-        $('#mingdao-block').show();        
+    } else {
+        $('#mingdao-block').show();
     }
 }
 
@@ -208,7 +207,7 @@ $(function() {
                 var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
-            var addApp = '<div class="icon-wrapper"><span class="icon-add"><img src="../images/add.png"/></span></div>';
+            var addApp = '<div class="icon-wrapper"><span class="icon-add"><img class="add-new-app" src="../images/add.png"/></span></div>';
             a += addApp;
             arrow_div = '<div class="arrow"></div>';
             ulStr += ('<li><span class="initial categorized-initial"><img src="../images/' + k + 'logo.png"></span>' + a + arrow_div + '</li>');
@@ -272,8 +271,8 @@ $(function() {
         var ulStr = '';
         for (var i = 0; i < 3; i++) {
             var veneu = veneus[i];
-            var title = '<strong>' + veneu.title.replace('(这是一条测试商户数据，仅用于测试开发，开发完成后请申请正式数据...)','') + '</strong>';
-            var a = '<a target="_blank" href="'+veneu.url+'">' + title  + '</a>';
+            var title = '<strong>' + veneu.title.replace('(这是一条测试商户数据，仅用于测试开发，开发完成后请申请正式数据...)', '') + '</strong>';
+            var a = '<a target="_blank" href="' + veneu.url + '">' + title + '</a>';
             ulStr += ('<li>' + a + '</li>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
@@ -283,6 +282,17 @@ $(function() {
 
     $('body').on('closeWindow', function(e) {
         getCookie();
+    });
+
+    $('body').on('click', function(e) {
+        if (e.target.className === 'add-new-app') {
+            console.log(e.clientX, e.clientY);
+            $('#tuijian').css('top', e.clientY - 75);
+            $('#tuijian').css('left', e.clientX + 20);
+            $('#tuijian').show();
+        } else {
+            $('#tuijian').hide();
+        }
     });
 
     loadAppsByMode(MODE);
