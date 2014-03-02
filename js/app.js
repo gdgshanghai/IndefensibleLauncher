@@ -208,6 +208,8 @@ $(function() {
                 var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
+            var addApp = '<div class="icon-wrapper"><span class="icon-add"><img src="../images/add.png"/></span></div>';
+            a += addApp;
             arrow_div = '<div class="arrow"></div>';
             ulStr += ('<li><span class="initial categorized-initial"><img src="../images/' + k + 'logo.png"></span>' + a + arrow_div + '</li>');
         });
