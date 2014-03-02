@@ -175,6 +175,22 @@ body {
             width: 60px;
         }
     }
+    .icon-large {
+        @r: 98px;
+        display: inline-block;
+        height: @r;
+        width: @r;
+        border: 5px solid white;
+        border-radius: @r;
+        vertical-align: top;
+        margin: 0 23px 5px;
+        overflow: hidden;
+        // background: url("../images/default-icon.png") no-repeat center;
+        img {
+            height: @r / 2 + 6;
+            margin-top: 14px;
+        }
+    }
     .icon-label {
         color: white;
         font-family: Arial;

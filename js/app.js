@@ -29,8 +29,16 @@ var refreshMode = function() {
     setHighlightByMode(MODE);
 };
 
-var displayTime = function() {
-    $('#current-time').text(currentDisplayTime());
+var displayTime = function(t) {
+    $('#current-time').text(t.toTimeString().substring(0, 5));
+};
+
+var countTime = function(t) {
+    displayTime(t);
+    var leftSecond = 60 - t.getSeconds();
+    setTimeout(function() {
+        countTime(new Date());
+    }, leftSecond * 1000);
 };
 
 var setHighlightByMode = function(mode) {
@@ -134,7 +142,7 @@ var getNearVenus = function(long, lat) {
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
-    displayTime();
+    countTime(currentTime());
     $(".tab-switcher").click(function() {
         var id = $(this).attr('id');
         id = id.replace('tab', 'launcher');
@@ -186,9 +194,12 @@ $(function() {
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
-            ulStr += ('<li><a target="_blank" href="http://' + apps[i] + '"">' + apps[i] + '</a></li>');
+            var icon = '<span class="icon-large"><img src="http://' + apps[i] + '/favicon.ico"></span>';
+            var label = '<br><span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
+            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '">' + icon + label + '</a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
+
         $('#launcher-1 .apps').html(ulStr);
 
     });
