@@ -64,7 +64,10 @@ var loadTopHost = function() {
 };
 
 var loadCategorizedApps = function() {
-    $('body').trigger('loadCategorizedApps', mockdata.category);
+    chrome.storage.sync.get('topCategorizedApps', function(data) {
+        console.log("lokon"+data.topCategorizedApps);
+        $('body').trigger('loadCategorizedApps', data);
+    });
 };
 
 var loadAppsByMode = function(mode) {
@@ -181,9 +184,12 @@ $(function() {
         $('#launcher-3 .left-block').html(ulStr);
     });
     $('body').on('loadCategorizedApps', function(e, data) {
-        var topHosts = data,
+        //debugger
+        var topHosts = data.topCategorizedApps,
             ulStr = '';
         $.each(topHosts, function(k, v) {
+            console.log(k);
+            console.log('v:'+v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
                 var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
