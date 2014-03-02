@@ -65,14 +65,17 @@ var loadTopHost = function() {
 
 var loadCategorizedApps = function() {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        console.log("lokon" + data.topCategorizedApps);
         $('body').trigger('loadCategorizedApps', data);
     });
 };
 
 var loadAppsByMode = function(mode) {
-    $('body').trigger('loadAppsByMode', {
-        apps: mockdata.category[mode]
+    chrome.storage.sync.get('topCategorizedApps', function(data) {
+        console.log("abc:"+data.topCategorizedApps[mode]);
+        var a = data.topCategorizedApps[mode];
+        $('body').trigger('loadAppsByMode', {
+            apps: data.topCategorizedApps[mode]
+        });
     });
 };
 
@@ -184,7 +187,6 @@ $(function() {
         $('#launcher-3 .left-block').html(ulStr);
     });
     $('body').on('loadCategorizedApps', function(e, data) {
-        //debugger
         var topHosts = data.topCategorizedApps,
             ulStr = '';
         $.each(topHosts, function(k, v) {
