@@ -272,7 +272,7 @@ $(function() {
         var ulStr = '';
         for (var i = 0; i < 3; i++) {
             var veneu = veneus[i];
-            var title = '<strong>' + veneu.title.substring(0,20) + '</strong>';
+            var title = '<strong>' + veneu.title.replace('(这是一条测试商户数据，仅用于测试开发，开发完成后请申请正式数据...)','') + '</strong>';
             var a = '<a target="_blank" href="'+veneu.url+'">' + title  + '</a>';
             ulStr += ('<li>' + a + '</li>');
         }
