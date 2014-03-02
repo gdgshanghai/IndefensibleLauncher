@@ -10,6 +10,7 @@
 // xhr.send();
 
 var MODE;
+var ACCESS;
 
 var currentTime = function() {
     return new Date();
@@ -110,6 +111,7 @@ var openWindow = function(url) {
         chrome.windows.onRemoved.addListener(function(windowId) {
             if (windowId === id) {
                 console.log(id + 'closed');
+                $('body').trigger('closeWindow');
             }
         });
     });
@@ -117,11 +119,11 @@ var openWindow = function(url) {
 
 var getCookie = function() {
     chrome.cookies.get({
-        url: "http://192.168.2.165:8080/Membership-application/api/dianping/accesstoken",
-        name: "COOKIENAME"
+        url: "http://memberappwebservice.duapp.com/api/mingdao/index",
+        name: "MINGDAO_ACCESSTOKEN"
     }, function(c) {
         console.log(c);
-        // call mingdao in main UI
+        $('body').trigger('mingdaoCookie', c);
     })
 }
 
@@ -189,7 +191,7 @@ $(function() {
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             arrow_div = '<div class="arrow"></div>';
-            ulStr += ('<li><span class="initial categorized-initial"><img src="../images/'+k+'logo.png"></span>' + a +arrow_div+ '</li>');
+            ulStr += ('<li><span class="initial categorized-initial"><img src="../images/' + k + 'logo.png"></span>' + a + arrow_div + '</li>');
         });
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-2 .left-block').html(ulStr);
@@ -207,11 +209,50 @@ $(function() {
         $('#launcher-1 .apps').html(ulStr);
     });
 
-    $('#mingdao-block').click(function() {
-        openWindow('http://google.com');
+    $('body').on('mingdaoCookie', function(e, c) {
+        if (c) {
+            $('#mingdao-block').off('click');
+            MINGDAO_ACCESSTOKEN = c.value;
+            $.ajax({
+                url: 'https://api.mingdao.com/task/my_joined?access_token=' + MINGDAO_ACCESSTOKEN + '&format=json',
+                type: 'get'
+            }).done(function(data) {
+                $('body').trigger('mingdaoTask', data);
+            });
+        } else {
+            $('#mingdao-block').on('click', function() {
+                openWindow('http://memberappwebservice.duapp.com/api/mingdao/index');
+            });
+            $('#mingdao-block').text('Login Mingdao');
+        }
+    });
+
+    $('body').on('mingdaoTask', function(e, data) {
+        var d = JSON.parse(data);
+        var tasks = d.tasks;
+        var ulStr = '';
+        for (var i = 0; i < tasks.length; i++) {
+            var task = tasks[i];
+            var user = '<span>' + task.user.name + ' - </span>',
+                title = '<strong>' + task.title + '</strong>';
+            var dueTime = '';
+            if (task.expire_date || task.expire_date !== '') {
+                dueTime = '<br/><span class="expire-date">到期时间: ' + task.expire_date + '</span>';
+            }
+            var a = '<a target="_blank" href="https://www.mingdao.com/apps/taskcenter/task_' + task.guid + '">' + user + title + dueTime + '</a>';
+            ulStr += ('<li>' + a + '</li>');
+        }
+        ulStr = '<ul>' + ulStr + '</ul>';
+        $('#mingdao-block').html(ulStr);
+    });
+
+    $('body').on('closeWindow', function(e) {
+        getCookie();
     });
 
     loadAppsByMode(MODE);
+
+    getCookie();
 
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
