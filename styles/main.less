@@ -89,11 +89,7 @@ body {
         ul {
             padding-bottom: 60px;
             li {
-                background-color: rgba(255,255,255,0.3);
                 min-height: 115px;
-                &:first-child {
-                    border-top: none;
-                }
                 .initial {
                     display: inline-block;
                     font-size: 50px;
@@ -157,6 +153,7 @@ body {
         padding-top: 20px !important;
         li {
             margin: 20px 0;
+            background-color: rgba(255,255,255,0.3);
             .arrow {
                 background: url("../images/arrow.png");
                 float: right;
@@ -165,6 +162,15 @@ body {
                 margin-top: -120px;
                 margin-right: 10px;
             }
+        }
+    }
+}
+
+#launcher-3 {
+    ul li {
+        border-top: 3px solid #85b4d2;
+        &:first-child {
+            border-top: none;
         }
     }
 }
