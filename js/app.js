@@ -194,7 +194,7 @@ $(function() {
             console.log('v:' + v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
+                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.jpg"></span>';
                 var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
@@ -209,9 +209,9 @@ $(function() {
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
-            var img = '<img src="http://' + apps[i] + '/favicon.ico">',
+            var img = '<img src="../images/homepageicons/' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.png">',
                 label = '<span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
-            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + label + '</span></a>');
+            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
