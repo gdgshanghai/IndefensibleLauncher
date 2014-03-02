@@ -134,7 +134,7 @@ $(function() {
         $.each(sortedHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                a += (' <a class="icon-small" target="_blank" href="http://' + v[i] + '"">' + v[i] + '</a>');
+                a += ('<a target="_blank" href="http://' + v[i] + '"<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>' + v[i] + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
         });
