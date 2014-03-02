@@ -267,6 +267,20 @@ $(function() {
         $('#mingdao-block').html(ulStr);
     });
 
+    $('body').on('dianpingFood', function(e, data) {
+        var veneus = data.veneus;
+        var ulStr = '';
+        for (var i = 0; i < 3; i++) {
+            var veneu = veneus[i];
+            var title = '<strong>' + veneu.title.substring(0,20) + '</strong>';
+            var a = '<a target="_blank" href="'+veneu.url+'">' + title  + '</a>';
+            ulStr += ('<li>' + a + '</li>');
+        }
+        ulStr = '<ul>' + ulStr + '</ul>';
+        $('#mingdao-block').html(ulStr);
+    });
+
+
     $('body').on('closeWindow', function(e) {
         getCookie();
     });
