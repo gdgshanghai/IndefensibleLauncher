@@ -57,11 +57,42 @@ function saveTopHost() {
 
     var topHosts = urlArray.slice(0, 20);
     console.log(topHosts[0]);
-    saveToChrome(topHosts);
+    saveTopHostsToChrome(topHosts);
+    getList(topHosts);
   };
 }
 
-var saveToChrome = function(data) {
+var getList = function(list){
+    $.ajax({
+        url: 'http://memberappwebservice.duapp.com/api/url/catalogue',
+        data: {
+            urlList: JSON.stringify({
+                urlList: list
+            })
+        },
+        dateType: 'json',
+        type: 'get'
+    }).done(function(data){
+        console.log(data);
+        saveTopCategorizedAppsToChrome(data);
+    });
+}
+
+var saveTopCategorizedAppsToChrome = function(data) {
+  var theValue = data;
+  if (!theValue) {
+    message('Error: No value specified');
+    return;
+  }
+  chrome.storage.sync.set({
+    'topCategorizedApps': theValue
+  }, function() {
+    // message('Settings saved');
+    console.log('save ok');
+  });
+};
+
+var saveTopHostsToChrome = function(data) {
   var theValue = data;
   if (!theValue) {
     message('Error: No value specified');
