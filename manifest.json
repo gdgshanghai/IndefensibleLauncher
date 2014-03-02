@@ -9,6 +9,7 @@
     "history",
     "storage",
     "webRequest",
+    "cookies",
     "*://*/"
   ],
   "chrome_url_overrides": {

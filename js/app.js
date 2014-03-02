@@ -1,4 +1,4 @@
-// var xhr = new XMLHttpRequest();
+/// var xhr = new XMLHttpRequest();
 // //xhr.open("GET", "https://www.getpostman.com/collections/c594ef706d94e390f5c3", true);
 // xhr.open("GET", "http://portal.qiniu.com/", true);
 // xhr.onreadystatechange = function() {
@@ -106,6 +106,30 @@ var openWindow = function(url) {
         });
     });
 }
+
+var getCookie =function() {
+    chrome.cookies.get({url:"http://192.168.2.165:8080/Membership-application/api/dianping/accesstoken", name:"COOKIENAME"}, function(c) {
+    console.log(c);
+    // call mingdao in main UI
+})
+}
+
+var getTodoList = function(accessToken) {
+    //https://api.mingdao.com/task/my_joined?access_token=b0a4216f16ec413bb40aa86bcd9bcc86&format=json
+}
+
+var getNearVenus = function(long, lat) {
+    var url = "http://192.168.2.165:8080/Membership-application/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734";
+    $.ajax({
+        url: url,
+        type: "GET",
+    }).done(function(data){
+        console.log(data);
+    });
+}
+
+
+
 
 $(function() {
     MODE = getMode(currentTime());
