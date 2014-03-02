@@ -188,7 +188,7 @@ $(function() {
                 var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en/g, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
-            ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
+            ulStr += ('<li><span class="initial categorized-initial"><img src="../images/'+k+'logo.png"></span>' + a + '</li>');
         });
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-2 .left-block').html(ulStr);
