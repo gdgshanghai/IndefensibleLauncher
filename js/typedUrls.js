@@ -64,7 +64,7 @@ function saveTopHost() {
 
 var getList = function(list){
     $.ajax({
-        url: 'http://memberappwebservice.duapp.com/api/url/catalogue',
+        url: 'http://shaman.incstage.com:8080/indefensible-launcher/api/url/catalogue',
         data: {
             urlList: JSON.stringify({
                 urlList: list

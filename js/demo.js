@@ -23,7 +23,7 @@ $(function() {
 
     $("#noon").click(function(){
         $.ajax({
-            url: 'http://memberappwebservice.duapp.com/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734'
+            url: 'http://shaman.incstage.com:8080/indefensible-launcher/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734'
         }).done(function(data) {
             console.log(data.veneus[0].title);
             $('body').trigger('dianpingFood', data);

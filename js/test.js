@@ -25,5 +25,5 @@ var testGetMode = function() {
 };
 
 var testGetDianPingJson = function(){
-    getJson('http://192.168.2.165:8080/Membership-application/api/dianping/veneus');
+    getJson('http://shaman.incstage.com:8080/indefensible-launcher/api/dianping/veneus');
 };

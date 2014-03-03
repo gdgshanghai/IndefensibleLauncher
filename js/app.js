@@ -134,7 +134,7 @@ var openWindow = function(url) {
 
 var getCookie = function() {
     chrome.cookies.get({
-        url: "http://memberappwebservice.duapp.com/api/mingdao/index",
+        url: "http://shaman.incstage.com:8080/indefensible-launcher/api/mingdao/index",
         name: "MINGDAO_ACCESSTOKEN"
     }, function(c) {
         console.log(c);
@@ -147,7 +147,7 @@ var getTodoList = function(accessToken) {
 }
 
 var getNearVenus = function(long, lat) {
-    var url = "http://192.168.2.165:8080/Membership-application/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734";
+    var url = "http://shaman.incstage.com:8080/indefensible-launcher/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734";
     $.ajax({
         url: url,
         type: "GET",
@@ -241,7 +241,7 @@ $(function() {
             });
         } else {
             $('#mingdao-block').on('click', function() {
-                openWindow('http://memberappwebservice.duapp.com/api/mingdao/index');
+                openWindow('http://shaman.incstage.com:8080/indefensible-launcher/api/mingdao/index');
             });
             $('#mingdao-block').addClass('entrance');
         }
