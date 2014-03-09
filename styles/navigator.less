@@ -1,0 +1,44 @@
+//===========================================================
+
+@tab-switcher-width: 80px;
+@tab-switcher-height: 30px;
+@border-height: 5px;
+
+@m1: (@bottom-height - @tab-switcher-height) / 2;
+@m2: @tab-switcher-width * 0.25;
+
+@full-width: @tab-switcher-width + @m2 * 2;
+
+@nav-color: white;
+@border-color: #d5d7d6;
+@border-color-hover: #7d7d7d;
+
+//===========================================================
+
+.navigator {
+    height: 100%;
+    width: 100%;
+    background: url("../images/launcher.png") no-repeat;
+    background-color: @nav-color;
+
+    .tab-holder {
+        overflow: hidden;
+        margin: 0 auto;
+        width: @full-width * 3;
+
+        .tab-switcher {
+            float: left;
+            
+            width: @tab-switcher-width;
+            height: @tab-switcher-height - @border-height;
+            border-top: @border-height solid @border-color;
+            
+            margin: @m1 @m2;
+            
+            &:hover, &.current {
+                border-top-color: @border-color-hover;
+                cursor: pointer;
+            }
+        }
+    }
+}
