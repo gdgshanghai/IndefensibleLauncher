@@ -39,11 +39,19 @@ body {
         overflow-x: hidden;
         .main-body {
             width: 300%;
+            height: 100%;
             position: relative;
-            overflow: hidden;
+            // overflow: hidden;
             .launcher-content {
-                width: 100%;
+                width: 100% / 3;
+                height: 100%;
                 float: left;
+                .content-wrapper {
+                    background-color: rgba(0,0,0,0.2);
+                    width: 850px;
+                    height: 100%;
+                    margin: 0 auto;
+                }
             }
         }
     }
@@ -89,9 +97,9 @@ body {
 
 #launcher-1 {
     background-color: rgba(0,0,0,0.2);
-    height: 605px;
-    width: 850px;
-    margin: 0 auto;
+    // height: 605px;
+    // width: 850px;
+    // margin: 0 auto;
     .first-line {
         padding-top: 40px;
         max-height: 220px;
