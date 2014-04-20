@@ -24,6 +24,23 @@ var testGetMode = function() {
     console.log('17:01 ' + (mode === 'home'));
 };
 
+var testSortMap = function() {
+    var beforeSorted = {
+        '1': ['1','2','5'],
+        'P': ['p1','p2','p3'],
+        'Z': ['z1','z2','z3'],
+        'A': ['a1','a2','a3']
+    },
+    expected = {
+        '1': ['1','2','5'],
+        'A': ['a1','a2','a3'],
+        'P': ['p1','p2','p3'],
+        'Z': ['z1','z2','z3']
+    };
+    var actual = sortMapKeyByInitial(beforeSorted);
+    console.log(JSON.stringify(expected) === JSON.stringify(actual));
+};
+
 var testGetDianPingJson = function(){
     getJson('http://shaman.incstage.com:8080/indefensible-launcher/api/dianping/veneus');
 };
