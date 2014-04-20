@@ -195,17 +195,6 @@ $(function() {
         $('#launcher-1 .apps').html(ulStr);
     });
 
-    $('body').on('click', function(e) {
-        if (e.target.className === 'add-new-app') {
-            console.log(e.clientX, e.clientY);
-            $('#tuijian').css('top', e.clientY - 75);
-            $('#tuijian').css('left', e.clientX + 20);
-            $('#tuijian').show();
-        } else {
-            $('#tuijian').hide();
-        }
-    });
-
     loadAppsByMode(MODE);
 
 });
