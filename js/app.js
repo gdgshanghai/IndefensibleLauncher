@@ -118,7 +118,17 @@ var openWindow = function(url) {
             }
         });
     });
-}
+};
+
+var getIconWrapperTmpl = function() {
+    return $('#icon-wrapper-tmpl').get(0).innerHTML;
+};
+
+var genIconWrapperDom = function(domainName, domain) {
+    var tmpl = getIconWrapperTmpl(),
+    ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
+    console.log(ret);
+};
 
 $(function() {
     MODE = getMode(currentTime());
@@ -169,8 +179,9 @@ $(function() {
             console.log('v:' + v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
+                var domainName = v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '');
+                var icon = '<span class="icon-small"><img src="../images/icons/' + domainName + '.jpg"></span>';
+                var label = '<br><span class="icon-label">' + domainName + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             var addApp = '<div class="icon-wrapper"><span class="icon-add"><img class="add-new-app" src="../images/add.png"/></span></div>';
