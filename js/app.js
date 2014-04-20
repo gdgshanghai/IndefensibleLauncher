@@ -126,8 +126,8 @@ var getIconWrapperTmpl = function() {
 
 var genIconWrapperDom = function(domainName, domain) {
     var tmpl = getIconWrapperTmpl(),
-    ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
-    console.log(ret);
+        ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
+    return ret;
 };
 
 $(function() {
@@ -179,10 +179,10 @@ $(function() {
             console.log('v:' + v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                var domainName = v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '');
-                var icon = '<span class="icon-small"><img src="../images/icons/' + domainName + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + domainName + '</span>';
-                a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
+                var domain = v[i],
+                    domainName = domain.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
+                var iconWapperDom = genIconWrapperDom(domainName, domain);
+                a += iconWapperDom;
             }
             var addApp = '<div class="icon-wrapper"><span class="icon-add"><img class="add-new-app" src="../images/add.png"/></span></div>';
             a += addApp;
