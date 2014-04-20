@@ -1,6 +1,5 @@
 function saveTopHost() {
-  var microsecondsPerWeek = 12 * 1000 * 60 * 60 * 24 * 7;
-  var oneWeekAgo = (new Date).getTime() - microsecondsPerWeek;
+  var oneWeekAgo = (new Date).getTime() - MICRO_SECONDS_PER_WEEK;
 
   var numRequestsOutstanding = 0;
 
