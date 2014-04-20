@@ -19,11 +19,11 @@ var currentTime = function() {
 var getMode = function(time) {
     var h = time.getHours();
     if (h >= FIVE_PM || h < NINE_AM) {
-        return 'home';
+        return MODE_HOME;
     } else {
-        return 'work';
+        return MODE_WORK;
     }
-    return 'default';
+    return MODE_DEFAULT;
 };
 
 var refreshMode = function() {
@@ -32,7 +32,7 @@ var refreshMode = function() {
 };
 
 var setMingdao = function(mode) {
-    if (mode === 'home') {
+    if (mode === MODE_HOME) {
         $('#mingdao-block').hide();
     } else {
         $('#mingdao-block').show();
@@ -100,21 +100,21 @@ var getMapFromHostList = function(hosts) {
     return map;
 };
 
-var sortObjectByKey = function(obj) {
+var sortMapKeyByInitial = function(map) {
     var keys = [];
-    var sorted_obj = {};
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+    var sorted_map = {};
+    for (var key in map) {
+        if (map.hasOwnProperty(key)) {
             keys.push(key);
         }
     }
     keys.sort();
 
     $.each(keys, function(i, key) {
-        var val = obj[key];
-        sorted_obj[key] = val;
+        var val = map[key];
+        sorted_map[key] = val;
     });
-    return sorted_obj;
+    return sorted_map;
 };
 
 var openWindow = function(url) {
@@ -129,30 +129,6 @@ var openWindow = function(url) {
                 $('body').trigger('closeWindow');
             }
         });
-    });
-}
-
-var getCookie = function() {
-    chrome.cookies.get({
-        url: "http://shaman.incstage.com:8080/indefensible-launcher/api/mingdao/index",
-        name: "MINGDAO_ACCESSTOKEN"
-    }, function(c) {
-        console.log(c);
-        $('body').trigger('mingdaoCookie', c);
-    })
-}
-
-var getTodoList = function(accessToken) {
-    //https://api.mingdao.com/task/my_joined?access_token=b0a4216f16ec413bb40aa86bcd9bcc86&format=json
-}
-
-var getNearVenus = function(long, lat) {
-    var url = "http://shaman.incstage.com:8080/indefensible-launcher/api/dianping/business?latitude=31.18268013000488&longitude=121.42769622802734";
-    $.ajax({
-        url: url,
-        type: "GET",
-    }).done(function(data) {
-        console.log(data);
     });
 }
 
@@ -177,10 +153,11 @@ $(function() {
         $('body').removeClass().addClass('blue-bg');
         loadTopHost();
     });
+
     $('body').on('loadTopHost', function(e, data) {
         var topHosts = data.topHosts,
             ulStr = '';
-        var sortedHosts = sortObjectByKey(getMapFromHostList(topHosts))
+        var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
         $.each(sortedHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {
@@ -195,6 +172,7 @@ $(function() {
         ulStr = header + '<ul>' + ulStr + '</ul>';
         $('#launcher-3 .left-block').html(ulStr);
     });
+
     $('body').on('loadCategorizedApps', function(e, data) {
         var topHosts = data.topCategorizedApps,
             ulStr = '';
@@ -215,6 +193,7 @@ $(function() {
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-2 .left-block').html(ulStr);
     });
+
     $('body').on('loadAppsByMode', function(e, data) {
         $('body').removeClass().addClass(MODE + '-bg');
         var apps = data.apps;
@@ -226,62 +205,6 @@ $(function() {
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
-    });
-
-    $('body').on('mingdaoCookie', function(e, c) {
-        if (c) {
-            $('#mingdao-block').off('click');
-            $('#mingdao-block').removeClass('entrance');
-            MINGDAO_ACCESSTOKEN = c.value;
-            $.ajax({
-                url: 'https://api.mingdao.com/task/my_joined?access_token=' + MINGDAO_ACCESSTOKEN + '&format=json',
-                type: 'get'
-            }).done(function(data) {
-                $('body').trigger('mingdaoTask', data);
-            });
-        } else {
-            $('#mingdao-block').on('click', function() {
-                openWindow('http://shaman.incstage.com:8080/indefensible-launcher/api/mingdao/index');
-            });
-            $('#mingdao-block').addClass('entrance');
-        }
-    });
-
-    $('body').on('mingdaoTask', function(e, data) {
-        var d = JSON.parse(data);
-        var tasks = d.tasks;
-        var ulStr = '';
-        for (var i = 0; i < tasks.length; i++) {
-            var task = tasks[i];
-            var user = '<span>' + task.user.name + ' - </span>',
-                title = '<strong>' + task.title + '</strong>';
-            var dueTime = '';
-            if (task.expire_date || task.expire_date !== '') {
-                dueTime = '<br/><span class="expire-date">到期时间: ' + task.expire_date + '</span>';
-            }
-            var a = '<a target="_blank" href="https://www.mingdao.com/apps/taskcenter/task_' + task.guid + '">' + user + title + dueTime + '</a>';
-            ulStr += ('<li>' + a + '</li>');
-        }
-        ulStr = '<ul>' + ulStr + '</ul>';
-        $('#mingdao-block').html(ulStr);
-    });
-
-    $('body').on('dianpingFood', function(e, data) {
-        var veneus = data.veneus;
-        var ulStr = '';
-        for (var i = 0; i < 3; i++) {
-            var veneu = veneus[i];
-            var title = '<strong>' + veneu.title.replace('(这是一条测试商户数据，仅用于测试开发，开发完成后请申请正式数据...)', '') + '</strong>';
-            var a = '<a target="_blank" href="' + veneu.url + '">' + title + '</a>';
-            ulStr += ('<li>' + a + '</li>');
-        }
-        ulStr = '<ul>' + ulStr + '</ul>';
-        $('#mingdao-block').html(ulStr);
-    });
-
-
-    $('body').on('closeWindow', function(e) {
-        getCookie();
     });
 
     $('body').on('click', function(e) {
@@ -296,8 +219,6 @@ $(function() {
     });
 
     loadAppsByMode(MODE);
-
-    getCookie();
 
     // chrome.location.watchLocation('getLocation', {});
     // chrome.location.onLocationUpdate.addListener(function(position) {
