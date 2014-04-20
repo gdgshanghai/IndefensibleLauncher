@@ -6,3 +6,5 @@ MODE_WORK = 'work';
 MODE_DEFAULT = 'default';
 
 API_HOST = 'http://shaman.incstage.com:8080/indefensible-launcher';
+
+TOP_LEVEL_DOMAIN_PATTERN = /\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g;

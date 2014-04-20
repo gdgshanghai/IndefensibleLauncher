@@ -69,7 +69,6 @@ var loadCategorizedApps = function() {
 
 var loadAppsByMode = function(mode) {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        console.log("abc:" + data.topCategorizedApps[mode]);
         var a = data.topCategorizedApps[mode];
         $('body').trigger('loadAppsByMode', {
             apps: data.topCategorizedApps[mode]
@@ -151,8 +150,8 @@ $(function() {
             var a = '';
             for (var i = 0; i < v.length; i++) {
                 // var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
-                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
+                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
+                var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
@@ -170,8 +169,8 @@ $(function() {
             console.log('v:' + v);
             var a = '';
             for (var i = 0; i < v.length; i++) {
-                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
+                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
+                var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
                 a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
             }
             var addApp = '<div class="icon-wrapper"><span class="icon-add"><img class="add-new-app" src="../images/add.png"/></span></div>';
@@ -188,8 +187,8 @@ $(function() {
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
-            var img = '<img src="../images/homepageicons/' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '.png">',
-                label = '<span class="icon-label">' + apps[i].replace(/\.com|\.cn|\.io|\.org|\.hk|\.jp|\.en|\.tv|\.net/g, '') + '</span>';
+            var img = '<img src="../images/homepageicons/' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.png">',
+                label = '<span class="icon-label">' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
             ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
