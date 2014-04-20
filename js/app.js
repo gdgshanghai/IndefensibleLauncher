@@ -1,14 +1,3 @@
-/// var xhr = new XMLHttpRequest();
-// //xhr.open("GET", "https://www.getpostman.com/collections/c594ef706d94e390f5c3", true);
-// xhr.open("GET", "http://portal.qiniu.com/", true);
-// xhr.onreadystatechange = function() {
-//     if (xhr.readyState == 4) {
-//         // WARNING! Might be injecting a malicious script!
-//         document.getElementById("resp").innerHTML = xhr.responseText;
-//     }
-// }
-// xhr.send();
-
 var MODE;
 var ACCESS;
 
@@ -220,9 +209,4 @@ $(function() {
 
     loadAppsByMode(MODE);
 
-    // chrome.location.watchLocation('getLocation', {});
-    // chrome.location.onLocationUpdate.addListener(function(position) {
-    //     console.log('fire onLocationUpdate');
-    //     console.log(JSON.stringify(position));
-    // });
 });
