@@ -63,7 +63,7 @@ function saveTopHost() {
 
 var getList = function(list){
     $.ajax({
-        url: 'http://shaman.incstage.com:8080/indefensible-launcher/api/url/catalogue',
+        url: API_HOST + URI_CATALOGUE,
         data: {
             urlList: JSON.stringify({
                 urlList: list
