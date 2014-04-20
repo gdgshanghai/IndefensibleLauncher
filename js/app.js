@@ -130,6 +130,10 @@ var genIconWrapperDom = function(domainName, domain) {
     return ret;
 };
 
+var getPlusIconWrapperTmpl = function() {
+    return $('#plus-icon-wrapper-tmpl').get(0).innerHTML;
+};
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
@@ -184,7 +188,7 @@ $(function() {
                 var iconWapperDom = genIconWrapperDom(domainName, domain);
                 a += iconWapperDom;
             }
-            var addApp = '<div class="icon-wrapper"><span class="icon-add"><img class="add-new-app" src="../images/add.png"/></span></div>';
+            var addApp = getPlusIconWrapperTmpl();
             a += addApp;
             arrow_div = '<div class="arrow"></div>';
             ulStr += ('<li><span class="initial categorized-initial"><img src="../images/' + k + 'logo.png"></span>' + a + arrow_div + '</li>');
