@@ -134,6 +134,16 @@ var getPlusIconWrapperTmpl = function() {
     return $('#plus-icon-wrapper-tmpl').get(0).innerHTML;
 };
 
+var getCatalogueTmpl = function() {
+    return $('#catalogue-tmpl').get(0).innerHTML;
+};
+
+var genCatalogueDom = function(catalogueName, iconsDomStr) {
+    var tmpl = getCatalogueTmpl(),
+        ret = tmpl.replace(/%catalogueName%/g, catalogueName).replace(/%iconsDomStr%/g, iconsDomStr);
+    return ret;
+};
+
 $(function() {
     MODE = getMode(currentTime());
     refreshMode();
@@ -178,9 +188,7 @@ $(function() {
     $('body').on('loadCategorizedApps', function(e, data) {
         var topHosts = data.topCategorizedApps,
             ulStr = '';
-        $.each(topHosts, function(k, v) {
-            console.log(k);
-            console.log('v:' + v);
+        $.each(topHosts, function(catalogueName, v) {
             var listDomStr = '';
             for (var i = 0; i < v.length; i++) {
                 var domain = v[i],
@@ -188,7 +196,7 @@ $(function() {
                 listDomStr += genIconWrapperDomStr(domainName, domain);
             }
             listDomStr += getPlusIconWrapperTmpl();
-            ulStr += ('<li><span class="initial categorized-initial"><img src="../images/' + k + 'logo.png"></span>' + listDomStr + '<div class="arrow"></div>' + '</li>');
+            ulStr += genCatalogueDom(catalogueName, listDomStr);
         });
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-2 .left-block').html(ulStr);
