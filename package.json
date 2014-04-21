@@ -1,0 +1,26 @@
+{
+  "name": "IndefensibleLauncher",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gdgshanghai/IndefensibleLauncher.git"
+  },
+  "keywords": [
+    "Chrome Extension",
+    "Tab Launcher"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gdgshanghai/IndefensibleLauncher/issues"
+  },
+  "homepage": "https://github.com/gdgshanghai/IndefensibleLauncher",
+  "devDependencies": {
+    "grunt": "^0.4.4"
+  }
+}
