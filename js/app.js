@@ -204,6 +204,10 @@ $(function() {
         var topHosts = data.topCategorizedApps,
             ulStr = genCatalogueListDomStr(topHosts);
         $('#launcher-2 .left-block').html(ulStr);
+        $('.icon-wrapper', '#launcher-2').draggable({
+            containment: 'document',
+            revert: true
+        });
     });
 
     $('body').on('loadAppsByMode', function(e, data) {
