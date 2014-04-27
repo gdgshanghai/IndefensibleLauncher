@@ -17,7 +17,6 @@ var getMode = function(time) {
 
 var refreshMode = function() {
     setHighlightByMode(MODE);
-    setMingdao(MODE);
 };
 
 var displayTime = function(t) {

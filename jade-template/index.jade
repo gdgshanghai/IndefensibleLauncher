@@ -1,0 +1,88 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title Indefensible Launcher
+    link(rel="stylesheet", type="text/css", href="styles/main.css")
+  body
+    .upper-part
+      .main-content
+        .main-body
+
+          #launcher-1.launcher-content
+            .content-wrapper
+              .mode-wrapper
+                .context-mode
+                  #work.context-mode-title.mode-work
+                  #home.context-mode-title.mode-home
+                  #add-context
+                    img(src="../images/add.png")
+              .first-line
+                .current-time-wapper
+                  #current-time.current-time
+              .apps
+
+          #launcher-2.launcher-content
+            .left-block
+            .right-block
+              ul.from-az
+                a.icon-wrapper(target="_blank", href="http://comic.sfacg.com")
+                  span.icon-small
+                  img(src="../images/icons/comic.sfacg.jpg")
+                  br
+                  span.icon-label comic.sfacg
+                a.icon-wrapper(target="_blank", href="http://code.google.com")
+                  span.icon-small
+                  img(src="../images/icons/code.google.jpg")
+                  br
+                  span.icon-label code.google
+                a.icon-wrapper(target="_blank", href="http://codepen.io")
+                  span.icon-small
+                  img(src="../images/icons/codepen.jpg")
+                  br
+                  span.icon-label codepen
+
+          #launcher-3.launcher-content
+            .left-block
+            .right-block
+              .launcher-label
+
+    .bottom-part
+      .navigator
+        .tab-holder
+          #tab-1.tab-switcher.current
+          #tab-2.tab-switcher
+          #tab-3.tab-switcher
+
+    script#icon-wrapper-tmpl(type="text/template")
+      | <a class="icon-wrapper" href="http://%httpUrl%">
+      |   <span class="icon-small">
+      |     <img src="../images/icons/%domainName%.jpg">
+      |   </span><br>
+      |   <span class="icon-label">%domainName%</span>
+      | </a>
+    script#plus-icon-wrapper-tmpl(type="text/template")
+      | <div class="icon-wrapper icon-add-wrapper">
+      |   <span class="icon-add">
+      |     <img class="add-new-app" src="../images/add.png"/>
+      |   </span>
+      | </div>
+    script#catalogue-tmpl(type="text/template")
+      | <li class="app-collection">
+      |   <span class="initial categorized-initial">
+      |     <img src="../images/%catalogueName%logo.png">
+      |   </span>
+      |   %iconsDomStr%
+      |   <div class="arrow"></div>
+      | </li>
+
+    script(src="less/less-1.7.0.min.js")
+    script(src="jquery/jquery.min.js")
+    script(src="jquery-ui/js/jquery-ui-1.10.4.min.js")
+    script(src="js/constant.js")
+    script(src="js/app.js")
+    script(src="js/demo.js")
+    script(src="js/mockdata.js")
+    script(src="js/test.js")
+    script(src="js/typedUrls.js")
