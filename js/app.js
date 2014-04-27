@@ -204,9 +204,18 @@ $(function() {
         var topHosts = data.topCategorizedApps,
             ulStr = genCatalogueListDomStr(topHosts);
         $('#launcher-2 .left-block').html(ulStr);
-        $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2').draggable({
+        $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
             containment: 'document',
-            revert: true
+            revert: 'invalid',
+            helper: 'clone'
+        });
+        $('.app-collection', '#launcher-2').droppable({
+            accept: '#launcher-2 .from-az .icon-wrapper',
+            hoverClass: 'icon-hover',
+            drop: function(event, ui) {
+                $idlApp = ui.draggable.clone();
+                $idlApp.insertBefore($(this).find('.icon-add-wrapper'));
+            }
         });
     });
 

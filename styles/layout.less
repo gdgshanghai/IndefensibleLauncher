@@ -196,6 +196,9 @@ body {
         li {
             margin: 20px 0;
             background-color: rgba(255,255,255,0.3);
+            &.icon-hover {
+                background-color: rgba(255,255,255,0.6);
+            }
             .arrow {
                 background: url("../images/arrow.png");
                 float: right;
@@ -209,33 +212,12 @@ body {
             }
         }
     }
-}
-
-#mingdao-block {
-    height: 150px;
-    width: 450px;
-    position: absolute;
-    bottom: 60px;
-    background-color: rgba(0,0,0,0.5);
-    &.entrance {
-        background: url("../images/entrance.png") no-repeat top left;
-        background-color: rgba(0,0,0,0.5);
-    }
-    ul {
-        list-style: none;
-        li {
-            margin-bottom: 10px;
-            cursor: pointer;
-            a {
-                color: white;
-                text-decoration: none;
-                .expire {
-                    color: #CCC;
-                }
-            }
+    .right-block {
+        width: 200px;
+        .from-az {
+            padding: 0px;
         }
     }
-    color: white;
 }
 
 #launcher-3 {
