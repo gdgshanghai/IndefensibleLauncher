@@ -20,14 +20,6 @@ var refreshMode = function() {
     setMingdao(MODE);
 };
 
-var setMingdao = function(mode) {
-    if (mode === MODE_HOME) {
-        $('#mingdao-block').hide();
-    } else {
-        $('#mingdao-block').show();
-    }
-}
-
 var displayTime = function(t) {
     $('#current-time').text(t.toTimeString().substring(0, 5));
 };
