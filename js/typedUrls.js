@@ -61,22 +61,23 @@ function saveTopHost() {
   };
 }
 
-var getList = function(list){
-    $.ajax({
-        url: API_HOST + URI_CATALOGUE,
-        data: {
-            urlList: JSON.stringify({
-                urlList: list
-            })
-        },
-        dateType: 'json',
-        type: 'get'
-    }).done(function(data){
-        console.log(data);
-        saveTopCategorizedAppsToChrome(data);
-    }).fail(function(err){
-      console.error(err);
-    });
+var getList = function(list) {
+  $.ajax({
+    url: API_HOST + URI_CATALOGUE,
+    data: {
+      urlList: JSON.stringify({
+        urlList: list
+      })
+    },
+    dateType: 'json',
+    type: 'get'
+  }).done(function(data) {
+    console.log(data);
+    saveTopCategorizedAppsToChrome(data);
+  }).fail(function(err) {
+    console.error(err);
+    saveTopCategorizedAppsToChrome({});
+  });
 }
 
 var saveTopCategorizedAppsToChrome = function(data) {

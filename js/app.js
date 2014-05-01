@@ -54,7 +54,11 @@ var loadTopHost = function() {
 
 var loadCategorizedApps = function() {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        $('body').trigger('loadCategorizedApps', data);
+        if ($.isEmptyObject(data)) {
+            $('body').trigger('loadCategorizedApps', {});
+        } else {
+            $('body').trigger('loadCategorizedApps', data);
+        }
     });
 };
 
@@ -202,6 +206,20 @@ $(function() {
         var topHosts = data.topCategorizedApps,
             ulStr = genCatalogueListDomStr(topHosts);
         $('#launcher-2 .left-block').html(ulStr);
+        chrome.storage.sync.get('topHosts', function(data) {
+            var topHosts = data.topHosts,
+                ulStr = '';
+            var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
+            var a = ''
+            $.each(sortedHosts, function(k, v) {
+                for (var i = 0; i < v.length; i++) {
+                    var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
+                    var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
+                    a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
+                }
+            });
+            $('#launcher-2 .from-az').html(a);
+        });
         $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
             containment: 'document',
             revert: 'invalid',
