@@ -65,7 +65,7 @@ var getList = function(list) {
   $.ajax({
     url: API_HOST + URI_CATALOGUE,
     data: {
-      urlList: JSON.stringify({
+      j: JSON.stringify({
         urlList: list
       })
     },
