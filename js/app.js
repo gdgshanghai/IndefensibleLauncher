@@ -60,10 +60,17 @@ var loadCategorizedApps = function() {
 
 var loadAppsByMode = function(mode) {
     chrome.storage.sync.get('topCategorizedApps', function(data) {
-        var a = data.topCategorizedApps[mode];
-        $('body').trigger('loadAppsByMode', {
-            apps: data.topCategorizedApps[mode]
-        });
+        if ($.isEmptyObject(data)) {
+            // TODO: categorize apps by local map
+            console.error('load topCategorizedApps failed: empty data');
+            $('body').trigger('loadAppsByMode', {
+                apps: {}
+            });
+        } else {
+            $('body').trigger('loadAppsByMode', {
+                apps: data.topCategorizedApps[mode]
+            });
+        }
     });
 };
 

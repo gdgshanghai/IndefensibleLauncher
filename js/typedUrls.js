@@ -74,6 +74,8 @@ var getList = function(list){
     }).done(function(data){
         console.log(data);
         saveTopCategorizedAppsToChrome(data);
+    }).fail(function(err){
+      console.error(err);
     });
 }
 
