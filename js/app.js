@@ -219,19 +219,19 @@ $(function() {
                 }
             });
             $('#launcher-2 .from-az').html(a);
-        });
-        $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
-            containment: 'document',
-            revert: 'invalid',
-            helper: 'clone'
-        });
-        $('.app-collection', '#launcher-2').droppable({
-            accept: '#launcher-2 .from-az .icon-wrapper',
-            hoverClass: 'icon-hover',
-            drop: function(event, ui) {
-                $idlApp = ui.draggable.clone();
-                $idlApp.insertBefore($(this).find('.icon-add-wrapper'));
-            }
+            $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
+                containment: 'document',
+                revert: 'invalid',
+                helper: 'clone'
+            });
+            $('.app-collection', '#launcher-2').droppable({
+                accept: '#launcher-2 .from-az .icon-wrapper',
+                hoverClass: 'icon-hover',
+                drop: function(event, ui) {
+                    $idlApp = ui.draggable.clone();
+                    $idlApp.insertBefore($(this).find('.icon-add-wrapper'));
+                }
+            });
         });
     });
 
