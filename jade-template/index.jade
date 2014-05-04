@@ -56,26 +56,23 @@ html
           #tab-3.tab-switcher
 
     script#icon-wrapper-tmpl(type="text/template")
-      | <a class="icon-wrapper" href="http://%httpUrl%">
-      |   <span class="icon-small">
-      |     <img src="../images/icons/%domainName%.jpg">
-      |   </span><br>
-      |   <span class="icon-label">%domainName%</span>
-      | </a>
+      a.icon-wrapper(href="http://%httpUrl%")
+        span.icon-small
+          img(src="../images/icons/%domainName%.jpg")
+        br
+        span.icon-label %domainName%
+
     script#plus-icon-wrapper-tmpl(type="text/template")
-      | <div class="icon-wrapper icon-add-wrapper">
-      |   <span class="icon-add">
-      |     <img class="add-new-app" src="../images/add.png"/>
-      |   </span>
-      | </div>
+      div.icon-wrapper.icon-add-wrapper
+        span.icon-add
+          img.add-new-app(src="../images/add.png")
+
     script#catalogue-tmpl(type="text/template")
-      | <li class="app-collection">
-      |   <span class="initial categorized-initial">
-      |     <img src="../images/%catalogueName%logo.png">
-      |   </span>
-      |   %iconsDomStr%
-      |   <div class="arrow"></div>
-      | </li>
+      li.app-collection
+        span.initial.categorized-initial
+          img(src="../images/%catalogueName%logo.png")
+        %iconsDomStr%
+        div.arrow
 
     script(src="jquery/jquery.min.js")
     script(src="jquery-ui/js/jquery-ui-1.10.4.min.js")
