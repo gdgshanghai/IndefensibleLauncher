@@ -55,7 +55,14 @@ function saveTopHost() {
     });
 
     var topHosts = urlArray.slice(0, 20);
-    console.log(topHosts[0]);
+    var apps = [];
+    for (var i = 0; i < topHosts.length; i++) {
+      var app = new IDLApp();
+      app.init(topHosts[i]);
+      apps.push(app);
+    }
+    console.log('TopHosts:', topHosts);
+    console.log('apps:', apps);
     saveTopHostsToChrome(topHosts);
     getList(topHosts);
   };
