@@ -89,12 +89,11 @@ var getList = function(list) {
     saveTopCategorizedAppsToChrome(data);
   }).fail(function(err) {
     console.error(err);
-    saveTopCategorizedAppsToChrome({});
+    // saveTopCategorizedAppsToChrome({});
   });
 }
 
 var saveTopCategorizedAppsToChrome = function(data) {
-  AllCollection.init();
   for (title in data) {
     var col = new IDLCollection(title);
     for (var i = 0, len = data[title].length; i < len; i++) {
@@ -115,7 +114,7 @@ var getHost = function(url) {
   if (typeof match != "undefined" && null != match)
     host = match[1];
   return host.replace('www.', '');
-}
+};
 
 document.addEventListener('DOMContentLoaded', function() {
   saveTopHost();

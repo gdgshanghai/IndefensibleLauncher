@@ -1,5 +1,5 @@
 describe('IDLApp', function() {
-	describe('.init(url)', function() {
+	describe('app.init(url)', function() {
 
 		var app;
 
@@ -33,4 +33,18 @@ describe('IDLApp', function() {
 		});
 
 	});
+
+	describe('load', function() {
+		var appObject = {
+			title: 'google',
+			url: 'google.com',
+			initial: 'g',
+			icon: ''
+		};
+
+		it('should create new app instance of IDLApp', function() {
+			var app = IDLApp.load(appObject);
+			app.should.be.instanceOf(IDLApp);
+		})
+	})
 });

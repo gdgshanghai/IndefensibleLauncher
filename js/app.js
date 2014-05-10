@@ -47,36 +47,36 @@ var getJson = function(url) {
 };
 
 var loadTopHost = function() {
-    chrome.storage.sync.get('topHosts', function(data) {
-        $('body').trigger('loadTopHost', data);
-    });
+    // chrome.storage.sync.get('topHosts', function(data) {
+    //     $('body').trigger('loadTopHost', data);
+    // });
 };
 
 var loadCategorizedApps = function() {
     $('body').trigger('loadCategorizedApps', AllCollection);
-    // chrome.storage.sync.get('topCategorizedApps', function(data) {
-    //     if ($.isEmptyObject(data)) {
-    //         $('body').trigger('loadCategorizedApps', {});
-    //     } else {
-    //         $('body').trigger('loadCategorizedApps', data);
-    //     }
-    // });
 };
 
 var loadAppsByMode = function(mode) {
-    chrome.storage.sync.get('topCategorizedApps', function(data) {
-        if ($.isEmptyObject(data)) {
-            // TODO: categorize apps by local map
-            console.error('load topCategorizedApps failed: empty data');
-            $('body').trigger('loadAppsByMode', {
-                apps: {}
-            });
-        } else {
-            $('body').trigger('loadAppsByMode', {
-                apps: data.topCategorizedApps[mode]
-            });
-        }
-    });
+    if (AllCollection.inited) {
+        $('body').trigger('loadAppsByMode', AllCollection.find(mode));
+    } else {
+        window.setTimeout(function() {
+            loadAppsByMode(mode);
+        }, 100);
+    }
+    // chrome.storage.sync.get('topCategorizedApps', function(data) {
+    //     if ($.isEmptyObject(data)) {
+    //         // TODO: categorize apps by local map
+    //         console.error('load topCategorizedApps failed: empty data');
+    //         $('body').trigger('loadAppsByMode', {
+    //             apps: {}
+    //         });
+    //     } else {
+    //         $('body').trigger('loadAppsByMode', {
+    //             apps: data.topCategorizedApps[mode]
+    //         });
+    //     }
+    // });
 };
 
 var getMapFromHostList = function(hosts) {
@@ -123,16 +123,6 @@ var openWindow = function(url) {
     });
 };
 
-var getIconWrapperTmpl = function() {
-    return $('#icon-wrapper-tmpl').get(0).innerHTML;
-};
-
-var genIconWrapperDomStr = function(domainName, domain) {
-    var tmpl = getIconWrapperTmpl(),
-        ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
-    return ret;
-};
-
 var getPlusIconWrapperTmpl = function() {
     return $('#plus-icon-wrapper-tmpl').get(0).innerHTML;
 };
@@ -147,32 +137,19 @@ var genCatalogueDom = function(catalogueName, iconsDomStr) {
     return ret;
 };
 
-// var genCatalogueListDomStr = function(topHosts) {
-//     var ulStr = '';
-//     $.each(topHosts, function(catalogueName, v) {
-//         var listDomStr = '';
-//         for (var i = 0; i < v.length; i++) {
-//             var domain = v[i],
-//                 domainName = domain.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
-//             listDomStr += genIconWrapperDomStr(domainName, domain);
-//         }
-//         listDomStr += getPlusIconWrapperTmpl();
-//         ulStr += genCatalogueDom(catalogueName, listDomStr);
-//     });
-//     return '<ul>' + ulStr + '</ul>';
-// };
-
 var genCatalogueListDomStr = function(topHosts) {
     var ulStr = '';
     $.each(AllCollection.collections, function(name, col) {
         var listDomStr = '';
         $.each(col.apps, function(title, app) {
-            listDomStr += genIconWrapperDomStr(app.title, app.url);
+            listDomStr += app.render();
         });
         ulStr += genCatalogueDom(name, listDomStr);
     });
     return '<ul>' + ulStr + '</ul>';
 };
+
+AllCollection.init();
 
 $(function() {
     MODE = getMode(currentTime());
@@ -222,45 +199,54 @@ $(function() {
 
         $('#launcher-2 .left-block').html(ulStr);
 
-        // ====================
-        chrome.storage.sync.get('topHosts', function(data) {
-            var topHosts = data.topHosts,
-                ulStr = '';
-            var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
-            var a = ''
-            $.each(sortedHosts, function(k, v) {
-                for (var i = 0; i < v.length; i++) {
-                    var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
-                    var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-                    a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
-                }
-            });
-            $('#launcher-2 .from-az').html(a);
-            $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
-                containment: 'document',
-                revert: 'invalid',
-                helper: 'clone'
-            });
-            $('.app-collection', '#launcher-2').droppable({
-                accept: '#launcher-2 .from-az .icon-wrapper',
-                hoverClass: 'icon-hover',
-                drop: function(event, ui) {
-                    $idlApp = ui.draggable.clone();
-                    $idlApp.insertBefore($(this).find('.icon-add-wrapper'));
-                }
-            });
-        });
+        // =============================
+        // Don't delete these codes!
+        // =============================
+        // chrome.storage.sync.get('topHosts', function(data) {
+        //     var topHosts = data.topHosts,
+        //         ulStr = '';
+        //     var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
+        //     var a = ''
+        //     $.each(sortedHosts, function(k, v) {
+        //         for (var i = 0; i < v.length; i++) {
+        //             var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
+        //             var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
+        //             a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
+        //         }
+        //     });
+        //     $('#launcher-2 .from-az').html(a);
+        //     $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
+        //         containment: 'document',
+        //         revert: 'invalid',
+        //         helper: 'clone'
+        //     });
+        //     $('.app-collection', '#launcher-2').droppable({
+        //         accept: '#launcher-2 .from-az .icon-wrapper',
+        //         hoverClass: 'icon-hover',
+        //         drop: function(event, ui) {
+        //             $idlApp = ui.draggable.clone();
+        //             $idlApp.insertBefore($(this).find('.icon-add-wrapper'));
+        //         }
+        //     });
+        // });
     });
 
     $('body').on('loadAppsByMode', function(e, data) {
         $('body').removeClass().addClass(MODE + '-bg');
         var apps = data.apps;
         var ulStr = '';
-        for (var i = 0; i < apps.length; i++) {
-            var img = '<img src="../images/homepageicons/' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.png">',
-                label = '<span class="icon-label">' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
+        console.log(data);
+        for (var title in apps) {
+            var app = apps[title];
+            var img = '<img src="../images/homepageicons/' + app.title + '.png">',
+                label = '<span class="icon-label">' + app.title + '</span>';
+            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + app.url + '"><span class="icon-large">' + img + '</span></a>');
         }
+        // for (var i = 0; i < apps.length; i++) {
+        //     var img = '<img src="../images/homepageicons/' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.png">',
+        //         label = '<span class="icon-label">' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
+        //     ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
+        // }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
     });

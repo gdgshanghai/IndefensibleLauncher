@@ -3,7 +3,14 @@ var IDLApp = function() {
 	this.url = '';
 	this.initial = '';
 	this.icon = '';
-	this.collection = '';
+};
+
+IDLApp.load = function(app) {
+	var a = new IDLApp();
+	for (var attr in app) {
+		a[attr] = app[attr];
+	}
+	return a;
 };
 
 IDLApp.prototype.init = function(url) {
@@ -14,10 +21,35 @@ IDLApp.prototype.init = function(url) {
 	return this;
 };
 
+IDLApp.prototype.render = function() {
+	var domain = this.url,
+		domainName = this.title;
+
+	var tmpl = $('#icon-wrapper-tmpl').get(0).innerHTML,
+		ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
+
+	return ret;
+};
+
 IDLCollection = function(title) {
 	this.title = title || '';
 	this.apps = {};
 };
+
+IDLCollection.load = function(collection) {
+	var col = new IDLCollection();
+	for (var attr in collection) {
+		if (attr === 'apps') {
+			var apps = collection[attr];
+			for (var name in apps) {
+				col.add(IDLApp.load(apps[name]));
+			}
+		} else {
+			col[attr] = collection[attr];
+		}
+	}
+	return col;
+}
 
 IDLCollection.prototype.add = function(app) {
 	var title = app.title;
@@ -33,11 +65,12 @@ IDLCollection.prototype.save = function(callback) {
 
 var AllCollection = {
 	dbname: 'IDLCollections',
+	inited: false,
 	collections: {},
 
 	len: function() {
 		var i = 0;
-		for (key in this.collections) {
+		for (var key in this.collections) {
 			i++;
 		}
 		return i;
@@ -45,9 +78,10 @@ var AllCollection = {
 
 	init: function() {
 		DB.loadDB(this.dbname, function(db) {
-			for (colTitle in db) {
-				this.collections[colTitle] = db[colTitle];
+			for (var colTitle in db) {
+				this.collections[colTitle] = IDLCollection.load(db[colTitle]);
 			}
+			this.inited = true;
 		}.bind(this));
 	},
 
