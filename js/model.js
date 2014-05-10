@@ -63,6 +63,16 @@ IDLCollection.prototype.save = function(callback) {
 	AllCollection.save(this);
 };
 
+IDLCollection.prototype.render = function() {
+	var listDomStr = '';
+	for (var title in this.apps) {
+		listDomStr += this.apps[title].render();
+	}
+	var tmpl = $('#catalogue-tmpl').get(0).innerHTML,
+		ret = tmpl.replace(/%catalogueName%/g, this.title).replace(/%iconsDomStr%/g, listDomStr);
+	return ret;
+};
+
 var AllCollection = {
 	dbname: 'IDLCollections',
 	inited: false,

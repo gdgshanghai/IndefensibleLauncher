@@ -64,19 +64,6 @@ var loadAppsByMode = function(mode) {
             loadAppsByMode(mode);
         }, 100);
     }
-    // chrome.storage.sync.get('topCategorizedApps', function(data) {
-    //     if ($.isEmptyObject(data)) {
-    //         // TODO: categorize apps by local map
-    //         console.error('load topCategorizedApps failed: empty data');
-    //         $('body').trigger('loadAppsByMode', {
-    //             apps: {}
-    //         });
-    //     } else {
-    //         $('body').trigger('loadAppsByMode', {
-    //             apps: data.topCategorizedApps[mode]
-    //         });
-    //     }
-    // });
 };
 
 var getMapFromHostList = function(hosts) {
@@ -127,24 +114,10 @@ var getPlusIconWrapperTmpl = function() {
     return $('#plus-icon-wrapper-tmpl').get(0).innerHTML;
 };
 
-var getCatalogueTmpl = function() {
-    return $('#catalogue-tmpl').get(0).innerHTML;
-};
-
-var genCatalogueDom = function(catalogueName, iconsDomStr) {
-    var tmpl = getCatalogueTmpl(),
-        ret = tmpl.replace(/%catalogueName%/g, catalogueName).replace(/%iconsDomStr%/g, iconsDomStr);
-    return ret;
-};
-
 var genCatalogueListDomStr = function(topHosts) {
     var ulStr = '';
     $.each(AllCollection.collections, function(name, col) {
-        var listDomStr = '';
-        $.each(col.apps, function(title, app) {
-            listDomStr += app.render();
-        });
-        ulStr += genCatalogueDom(name, listDomStr);
+        ulStr += col.render();
     });
     return '<ul>' + ulStr + '</ul>';
 };
@@ -235,18 +208,12 @@ $(function() {
         $('body').removeClass().addClass(MODE + '-bg');
         var apps = data.apps;
         var ulStr = '';
-        console.log(data);
         for (var title in apps) {
             var app = apps[title];
             var img = '<img src="../images/homepageicons/' + app.title + '.png">',
                 label = '<span class="icon-label">' + app.title + '</span>';
             ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + app.url + '"><span class="icon-large">' + img + '</span></a>');
         }
-        // for (var i = 0; i < apps.length; i++) {
-        //     var img = '<img src="../images/homepageicons/' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.png">',
-        //         label = '<span class="icon-label">' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-        //     ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
-        // }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
     });
