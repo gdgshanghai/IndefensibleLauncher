@@ -1,0 +1,18 @@
+  //- link(rel="stylesheet", href="test/lib/mocha.css")
+
+  div#mocha
+
+  script(src="jquery/jquery.min.js")
+  script(src="test/lib/should.min.js")
+  script(src="test/lib/mocha.js")
+  script(src="js/constant.js")
+  script(src="js/IDLstorage.js")
+  script(src="js/model.js")
+  script.
+    mocha.setup('bdd');
+  script(src="test/IDLApp_test.js")
+  script(src="test/IDLStorage_test.js")
+  script.
+    mocha.checkLeaks();
+    mocha.globals(['jQuery']);
+    mocha.run();
