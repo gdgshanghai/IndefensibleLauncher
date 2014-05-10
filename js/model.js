@@ -14,6 +14,8 @@ IDLApp.prototype.init = function(url) {
 	return this;
 };
 
+var _c_dbname = 'IDLCollections';
+
 IDLCollection = function() {
 	this.title = '';
 	this.apps = {};
@@ -21,16 +23,12 @@ IDLCollection = function() {
 
 IDLCollection.prototype.add = function(app) {
 	var title = app.title;
-	console.log('======================')
-	console.log(this.apps);
-	console.log(this.apps.hasOwnProperty(title));
 	if (!this.apps.hasOwnProperty(title)) {
 		this.apps[title] = app;
 	}
-	console.log(this);
 	return this;
 };
 
-IDLCollection.prototype.save = function() {
-	DB.saveToStorage(this.title + 'Collection', this);
+IDLCollection.prototype.save = function(callback) {
+	DB.saveToDB(_c_dbname, this.title, this, callback);
 };

@@ -63,7 +63,13 @@ function saveTopHost() {
     }
     console.log('TopHosts:', topHosts);
     console.log('apps:', apps);
-    saveTopHostsToChrome(topHosts);
+    var collection = new IDLCollection();
+    collection.title = 'TopHosts';
+    collection.apps = apps;
+    collection.save(function() {
+      console.log('save success', collection);
+    });
+    // saveTopHostsToChrome(topHosts);
     getList(topHosts);
   };
 }

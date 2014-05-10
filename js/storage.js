@@ -4,8 +4,8 @@ var DB = window.DB || {};
 	var storage = chrome.storage.sync;
 	var PREFIX = 'IDL';
 
-	var namespace = function(key) {
-		return PREFIX + '.' + key;
+	var dbname = function(name) {
+		return PREFIX + '.' + name;
 	};
 
 	// only used for unit test
@@ -13,26 +13,29 @@ var DB = window.DB || {};
 		PREFIX = prefix;
 	};
 
-	var saveToStorage = function(key, obj, callback) {
-		var o = JSON.stringify(obj);
-		var ns = namespace(key);
-		storage.set({
-			ns: o
-		}, function() {
-			callback && callback();
+	var saveToDB = function(name, key, obj, callback) {
+		var dn = dbname(name);
+		storage.get(dn, function(s) {
+			if (typeof s[dn] === 'undefined') {
+				s[dn] = {};
+			}
+			var db = s[dn];
+			db[key] = obj;
+			storage.set(s, function() {
+				callback && callback();
+			});
 		});
 	};
 
-	var loadFromStorage = function(key, callback) {
-		if (callback) {
-			storage.get(namespace(key), function(o) {
-				var obj = JSON.parse(o);
-				callbackcallback(obj);
-			});
-		}
+	var loadFromDB = function(name, key, callback) {
+		var dn = dbname(name);
+		storage.get(dn, function(s) {
+			var db = s[dn] || {};
+			callback && callback(db[key]);
+		})
 	};
 
 	exports.__setPrefix = __setPrefix;
-	exports.saveToStorage = saveToStorage;
-	exports.loadFromStorage = loadFromStorage;
+	exports.saveToDB = saveToDB;
+	exports.loadFromDB = loadFromDB;
 })(DB);
