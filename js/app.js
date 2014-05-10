@@ -53,13 +53,14 @@ var loadTopHost = function() {
 };
 
 var loadCategorizedApps = function() {
-    chrome.storage.sync.get('topCategorizedApps', function(data) {
-        if ($.isEmptyObject(data)) {
-            $('body').trigger('loadCategorizedApps', {});
-        } else {
-            $('body').trigger('loadCategorizedApps', data);
-        }
-    });
+    $('body').trigger('loadCategorizedApps', AllCollection);
+    // chrome.storage.sync.get('topCategorizedApps', function(data) {
+    //     if ($.isEmptyObject(data)) {
+    //         $('body').trigger('loadCategorizedApps', {});
+    //     } else {
+    //         $('body').trigger('loadCategorizedApps', data);
+    //     }
+    // });
 };
 
 var loadAppsByMode = function(mode) {
@@ -146,17 +147,29 @@ var genCatalogueDom = function(catalogueName, iconsDomStr) {
     return ret;
 };
 
+// var genCatalogueListDomStr = function(topHosts) {
+//     var ulStr = '';
+//     $.each(topHosts, function(catalogueName, v) {
+//         var listDomStr = '';
+//         for (var i = 0; i < v.length; i++) {
+//             var domain = v[i],
+//                 domainName = domain.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
+//             listDomStr += genIconWrapperDomStr(domainName, domain);
+//         }
+//         listDomStr += getPlusIconWrapperTmpl();
+//         ulStr += genCatalogueDom(catalogueName, listDomStr);
+//     });
+//     return '<ul>' + ulStr + '</ul>';
+// };
+
 var genCatalogueListDomStr = function(topHosts) {
     var ulStr = '';
-    $.each(topHosts, function(catalogueName, v) {
+    $.each(AllCollection.collections, function(name, col) {
         var listDomStr = '';
-        for (var i = 0; i < v.length; i++) {
-            var domain = v[i],
-                domainName = domain.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
-            listDomStr += genIconWrapperDomStr(domainName, domain);
-        }
-        listDomStr += getPlusIconWrapperTmpl();
-        ulStr += genCatalogueDom(catalogueName, listDomStr);
+        $.each(col.apps, function(title, app) {
+            listDomStr += genIconWrapperDomStr(app.title, app.url);
+        });
+        ulStr += genCatalogueDom(name, listDomStr);
     });
     return '<ul>' + ulStr + '</ul>';
 };
@@ -203,9 +216,13 @@ $(function() {
     });
 
     $('body').on('loadCategorizedApps', function(e, data) {
+
         var topHosts = data.topCategorizedApps,
             ulStr = genCatalogueListDomStr(topHosts);
+
         $('#launcher-2 .left-block').html(ulStr);
+
+        // ====================
         chrome.storage.sync.get('topHosts', function(data) {
             var topHosts = data.topHosts,
                 ulStr = '';

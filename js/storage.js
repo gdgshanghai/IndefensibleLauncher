@@ -13,29 +13,25 @@ var DB = window.DB || {};
 		PREFIX = prefix;
 	};
 
-	var saveToDB = function(name, key, obj, callback) {
+	var saveDB = function(name, db, callback) {
 		var dn = dbname(name);
 		storage.get(dn, function(s) {
-			if (typeof s[dn] === 'undefined') {
-				s[dn] = {};
-			}
-			var db = s[dn];
-			db[key] = obj;
+			s[dn] = db;
 			storage.set(s, function() {
 				callback && callback();
 			});
 		});
 	};
 
-	var loadFromDB = function(name, key, callback) {
+	var loadDB = function(name, callback) {
 		var dn = dbname(name);
 		storage.get(dn, function(s) {
 			var db = s[dn] || {};
-			callback && callback(db[key]);
+			callback && callback(db);
 		})
 	};
 
 	exports.__setPrefix = __setPrefix;
-	exports.saveToDB = saveToDB;
-	exports.loadFromDB = loadFromDB;
+	exports.saveDB = saveDB;
+	exports.loadDB = loadDB;
 })(DB);

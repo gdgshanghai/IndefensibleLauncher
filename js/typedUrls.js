@@ -55,18 +55,18 @@ function saveTopHost() {
 
     var topHosts = urlArray.slice(0, 20);
     var apps = [];
-    for (var i = 0; i < topHosts.length; i++) {
-      var app = new IDLApp();
-      app.init(topHosts[i]);
-      apps.push(app);
-    }
+    // for (var i = 0; i < topHosts.length; i++) {
+    //   var app = new IDLApp();
+    //   app.init(topHosts[i]);
+    //   apps.push(app);
+    // }
 
-    var collection = new IDLCollection();
-    collection.title = 'TopHosts';
-    collection.apps = apps;
-    collection.save(function() {
-      console.log('save success', collection);
-    });
+    // var collection = new IDLCollection();
+    // collection.title = 'TopHosts';
+    // collection.apps = apps;
+    // collection.save(function() {
+    //   console.log('save success', collection);
+    // });
 
     getList(topHosts);
   };
@@ -94,17 +94,16 @@ var getList = function(list) {
 }
 
 var saveTopCategorizedAppsToChrome = function(data) {
-  var theValue = data;
-  if (!theValue) {
-    message('Error: No value specified');
-    return;
+  AllCollection.init();
+  for (title in data) {
+    var col = new IDLCollection(title);
+    for (var i = 0, len = data[title].length; i < len; i++) {
+      var app = new IDLApp();
+      app.init(data[title][i]);
+      col.add(app);
+    }
+    col.save();
   }
-  chrome.storage.sync.set({
-    'topCategorizedApps': theValue
-  }, function() {
-    // message('Settings saved');
-    console.log('save ok');
-  });
 };
 
 var getHost = function(url) {
