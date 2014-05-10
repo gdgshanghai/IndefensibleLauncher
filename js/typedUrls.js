@@ -4,27 +4,26 @@ function saveTopHost() {
   var numRequestsOutstanding = 0;
 
   chrome.history.search({
-      'text': '',
-      'startTime': oneWeekAgo,
-      'maxResults': 1000
-    },
-    function(historyItems) {
-      for (var i = 0; i < historyItems.length; ++i) {
-        var url = historyItems[i].url;
-        var processVisitsWithUrl = function(url) {
-          return function(visitItems) {
-            processVisits(url, visitItems);
-          };
+    'text': '',
+    'startTime': oneWeekAgo,
+    'maxResults': 1000
+  }, function(historyItems) {
+    for (var i = 0; i < historyItems.length; ++i) {
+      var url = historyItems[i].url;
+      var processVisitsWithUrl = function(url) {
+        return function(visitItems) {
+          processVisits(url, visitItems);
         };
-        chrome.history.getVisits({
-          url: url
-        }, processVisitsWithUrl(url));
-        numRequestsOutstanding++;
-      }
-      if (!numRequestsOutstanding) {
-        onAllVisitsProcessed();
-      }
-    });
+      };
+      chrome.history.getVisits({
+        url: url
+      }, processVisitsWithUrl(url));
+      numRequestsOutstanding++;
+    }
+    if (!numRequestsOutstanding) {
+      onAllVisitsProcessed();
+    }
+  });
 
   var urlToCount = {};
 
@@ -61,20 +60,21 @@ function saveTopHost() {
       app.init(topHosts[i]);
       apps.push(app);
     }
-    console.log('TopHosts:', topHosts);
-    console.log('apps:', apps);
+
     var collection = new IDLCollection();
     collection.title = 'TopHosts';
     collection.apps = apps;
     collection.save(function() {
       console.log('save success', collection);
     });
-    // saveTopHostsToChrome(topHosts);
+
     getList(topHosts);
   };
 }
 
 var getList = function(list) {
+  var c = new IDLCollection();
+  c.title = 'TopCategorizedApps';
   $.ajax({
     url: API_HOST + URI_CATALOGUE,
     data: {
@@ -101,20 +101,6 @@ var saveTopCategorizedAppsToChrome = function(data) {
   }
   chrome.storage.sync.set({
     'topCategorizedApps': theValue
-  }, function() {
-    // message('Settings saved');
-    console.log('save ok');
-  });
-};
-
-var saveTopHostsToChrome = function(data) {
-  var theValue = data;
-  if (!theValue) {
-    message('Error: No value specified');
-    return;
-  }
-  chrome.storage.sync.set({
-    'topHosts': theValue
   }, function() {
     // message('Settings saved');
     console.log('save ok');
