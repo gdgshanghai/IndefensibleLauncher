@@ -49,24 +49,25 @@ var getJson = function(url) {
 
 var loadTopHost = function() {
     DB.loadDB('topHosts', function(data) {
-        console.log('data=====>>>>', data);
         $('body').trigger('loadTopHost', {
             apps: data
         });
     });
-    // chrome.storage.sync.get('IDL.topHosts', function(data) {
-    //     $('body').trigger('loadTopHost', data.topHosts);
-    // });
 };
 
 var loadCategorizedApps = function() {
-    chrome.storage.sync.get('topCategorizedApps', function(data) {
-        if ($.isEmptyObject(data)) {
-            $('body').trigger('loadCategorizedApps', {});
-        } else {
-            $('body').trigger('loadCategorizedApps', data);
-        }
+    DB.loadDB('topHosts', function(data) {
+        $('body').trigger('loadCategorizedApps', {
+            apps: data
+        });
     });
+    // chrome.storage.sync.get('topCategorizedApps', function(data) {
+    //     if ($.isEmptyObject(data)) {
+    //         $('body').trigger('loadCategorizedApps', {});
+    //     } else {
+    //         $('body').trigger('loadCategorizedApps', data);
+    //     }
+    // });
 };
 
 var loadAppsByMode = function(mode) {
@@ -211,13 +212,14 @@ $(function() {
     });
 
     $('body').on('loadCategorizedApps', function(e, data) {
-        var topHosts = data.topCategorizedApps,
-            ulStr = genCatalogueListDomStr(topHosts);
+        var apps = data.apps,
+            ulStr = genCatalogueListDomStr(apps);
         $('#launcher-2 .left-block').html(ulStr);
-        chrome.storage.sync.get('topHosts', function(data) {
-            var topHosts = data.topHosts,
+
+        DB.loadDB('topHosts', function(data) {
+            var apps = data,
                 ulStr = '';
-            var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
+            var sortedHosts = sortMapKeyByInitial(getMapFromApps(apps));
             var a = ''
             $.each(sortedHosts, function(k, v) {
                 for (var i = 0; i < v.length; i++) {

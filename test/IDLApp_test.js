@@ -32,6 +32,13 @@ describe('IDLApp', function() {
 			// app.title.should.be.equal('localhost');
 		});
 
+		it('should set initial correct', function() {
+			app.init('baidu.com');
+			app.initial.should.be.eql('B');
+			app.init('google.com');
+			app.initial.should.be.eql('G');
+		});
+
 	});
 
 	describe('init with collection', function() {

@@ -1,3 +1,27 @@
+// ========================
+var CATEGORY = [
+	'news',
+	'finance',
+	'game',
+	'home',
+	'work',
+	'social',
+	'shopping'
+];
+
+var genRandomCollection = function() {
+	var ret = [];
+	var len = CATEGORY.length;
+	for (var i = 0; i < len; i++) {
+		if (Math.random() * 2 > 1) {
+			ret.push(CATEGORY[i]);
+		}
+	}
+	return ret;
+}
+
+// ========================
+
 var IDLApp = function() {
 	this.title = '';
 	this.url = '';
@@ -22,6 +46,8 @@ IDLApp.prototype.init = function(url, collections) {
 	}
 	if (Array.isArray(collections)) {
 		this.collections = collections;
+	} else {
+		this.collections = genRandomCollection();
 	}
 	return this;
 };
@@ -42,12 +68,12 @@ IDLApp.prototype.removeCollection = function(collection) {
 };
 
 
-IDLApp.prototype.render = function() {
-	var domain = this.url,
-		domainName = this.title;
+// IDLApp.prototype.render = function() {
+// 	var domain = this.url,
+// 		domainName = this.title;
 
-	var tmpl = $('#icon-wrapper-tmpl').get(0).innerHTML,
-		ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
+// 	var tmpl = $('#icon-wrapper-tmpl').get(0).innerHTML,
+// 		ret = tmpl.replace(/%httpUrl%/g, domain).replace(/%domainName%/g, domainName);
 
-	return ret;
-};
+// 	return ret;
+// };

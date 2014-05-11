@@ -64,7 +64,7 @@ function saveTopHost() {
     console.log('TopHosts:', topHosts);
     console.log('apps:', apps);
     saveTopHostsToChrome(apps);
-    getList(apps);
+    // getList(apps);
   };
 }
 
@@ -85,8 +85,13 @@ var getList = function(list) {
     console.error(err);
     saveTopCategorizedAppsToChrome({});
   });
-}
+};
 
+// var getCategorizedAppsFromJson = function(json) {
+//   for (var category in json) {
+//     var apps = json[category];
+//   }
+// };
 var saveTopCategorizedAppsToChrome = function(data) {
   var theValue = data;
   if (!theValue) {
