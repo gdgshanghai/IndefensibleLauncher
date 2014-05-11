@@ -1,3 +1,4 @@
+chrome.storage.sync.clear();
 var MODE;
 var ACCESS;
 
@@ -47,9 +48,15 @@ var getJson = function(url) {
 };
 
 var loadTopHost = function() {
-    chrome.storage.sync.get('topHosts', function(data) {
-        $('body').trigger('loadTopHost', data);
+    DB.loadDB('topHosts', function(data) {
+        console.log('data=====>>>>', data);
+        $('body').trigger('loadTopHost', {
+            d: data
+        });
     });
+    // chrome.storage.sync.get('IDL.topHosts', function(data) {
+    //     $('body').trigger('loadTopHost', data.topHosts);
+    // });
 };
 
 var loadCategorizedApps = function() {
@@ -184,7 +191,8 @@ $(function() {
     });
 
     $('body').on('loadTopHost', function(e, data) {
-        var topHosts = data.topHosts,
+        console.log('loadTopHost===>>>', data);
+        var topHosts = data.d,
             ulStr = '';
         var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
         $.each(sortedHosts, function(k, v) {

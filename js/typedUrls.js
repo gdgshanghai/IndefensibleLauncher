@@ -63,8 +63,8 @@ function saveTopHost() {
     }
     console.log('TopHosts:', topHosts);
     console.log('apps:', apps);
-    saveTopHostsToChrome(topHosts);
-    getList(topHosts);
+    saveTopHostsToChrome(apps);
+    getList(apps);
   };
 }
 
@@ -100,6 +100,7 @@ var saveTopCategorizedAppsToChrome = function(data) {
 
 var saveTopHostsToChrome = function(data) {
   var theValue = data;
+  console.log('topHosts the Value====>>>', theValue);
   if (!theValue) {
     message('Error: No value specified');
     return;
