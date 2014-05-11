@@ -93,7 +93,7 @@ var getMapFromApps = function(apps) {
         if (typeof map[c] === 'undefined') {
             map[c] = [];
         }
-        map[c].push(apps[i].url);
+        map[c].push(apps[i]);
     }
     return map;
 };
@@ -200,9 +200,9 @@ $(function() {
             var a = '';
             for (var i = 0; i < v.length; i++) {
                 // var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
-                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
-                var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-                a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
+                var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].title + '.jpg"></span>';
+                var label = '<br><span class="icon-label">' + v[i].title + '</span>';
+                a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i].url + '">' + icon + label + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
         });
@@ -223,9 +223,9 @@ $(function() {
             var a = ''
             $.each(sortedHosts, function(k, v) {
                 for (var i = 0; i < v.length; i++) {
-                    var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.jpg"></span>';
-                    var label = '<br><span class="icon-label">' + v[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-                    a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i] + '">' + icon + label + '</a>');
+                    var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].title + '.jpg"></span>';
+                    var label = '<br><span class="icon-label">' + v[i].title + '</span>';
+                    a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i].url + '">' + icon + label + '</a>');
                 }
             });
             $('#launcher-2 .from-az').html(a);
