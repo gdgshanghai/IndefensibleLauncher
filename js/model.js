@@ -3,7 +3,7 @@ var IDLApp = function() {
 	this.url = '';
 	this.initial = '';
 	this.icon = '';
-	this.collection = [];
+	this.collections = [];
 };
 
 IDLApp.load = function(app) {
@@ -14,10 +14,20 @@ IDLApp.load = function(app) {
 	return a;
 };
 
-IDLApp.prototype.init = function(url) {
+IDLApp.prototype.init = function(url, collections) {
 	if (url) {
 		this.url = url;
 		this.title = url.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
+	}
+	if (Array.isArray(collections)) {
+		this.collections = collections;
+	}
+	return this;
+};
+
+IDLApp.prototype.addCollection = function(collection) {
+	if (this.collections.indexOf(collection) === -1) {
+		this.collections.push(collection);
 	}
 	return this;
 };
