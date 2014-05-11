@@ -32,6 +32,15 @@ IDLApp.prototype.addCollection = function(collection) {
 	return this;
 };
 
+IDLApp.prototype.removeCollection = function(collection) {
+	var index = this.collections.indexOf(collection);
+	if (index != -1) {
+		this.collections.splice(index, 1);
+	}
+	return this;
+};
+
+
 IDLApp.prototype.render = function() {
 	var domain = this.url,
 		domainName = this.title;
