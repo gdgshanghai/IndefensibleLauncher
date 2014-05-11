@@ -1,5 +1,5 @@
 describe('IDLApp', function() {
-	describe('app.init(url)', function() {
+	describe('init with url', function() {
 
 		var app;
 
@@ -34,17 +34,54 @@ describe('IDLApp', function() {
 
 	});
 
-	describe('load', function() {
-		var appObject = {
-			title: 'google',
-			url: 'google.com',
-			initial: 'g',
-			icon: ''
-		};
+	describe('init with collection', function() {
+		it('should correct init with collection', function() {
+			var app = new IDLApp('google.com', ['news', 'finance']);
+			app.collection.length.should.be.equal(2);
+			app.collection.should.containEql('news');
+			app.collection.should.containEql('finance');
+		});
+	});
 
-		it('should create new app instance of IDLApp', function() {
-			var app = IDLApp.load(appObject);
-			app.should.be.instanceOf(IDLApp);
-		})
-	})
+	describe('add new collection to an app', function() {
+		// var app;
+
+		// beforeEach(function() {
+		// 	app = new IDLApp();
+		// });
+
+		it('should correctly add new collection to an app if the app don\'t have the collection', function() {
+			var app = new IDLApp('google.com', ['news', 'finance']);
+			app.AddCollection('game');
+			app.collection.length.should.be.equal(3);
+			app.collection.should.containEql('news');
+			app.collection.should.containEql('finance');
+			app.collection.should.containEql('game');
+		});
+
+		it('should do nothing if the app do have the collection', function() {
+			var app = new IDLApp('google.com', ['news', 'finance']);
+			app.AddCollection('news');
+			app.collection.length.should.be.equal(2);
+			app.collection.should.containEql('news');
+			app.collection.should.containEql('finance');
+		});
+
+	});
+
+	// describe('load', function() {
+	// 	var appObject = {
+	// 		title: 'google',
+	// 		url: 'google.com',
+	// 		initial: 'g',
+	// 		icon: ''
+	// 	};
+
+	// 	it('should create new app instance of IDLApp', function() {
+	// 		var app = IDLApp.load(appObject);
+	// 		app.should.be.instanceOf(IDLApp);
+	// 	})
+	// });
+
+
 });

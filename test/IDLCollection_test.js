@@ -1,27 +1,27 @@
 describe('IDLCollection', function() {
-	var c, app;
+
+	var c;
 
 	describe('.add()', function() {
 
 		beforeEach(function() {
 			c = new IDLCollection();
-			app = new IDLApp();
-			app.init('google.com');
 		});
 
-		it('should add app into collection when app not exist', function() {
+		it('should be able to add app', function() {
+			var app = new IDLApp().init('google.com');
 			c.add(app);
-			c.apps.should.have.property(app.title, app);
+			c.apps.should.have.property(app.url, app);
 		});
 
-		it('should not add app when app is exist', function() {
+		it('should have independent apps for each IDLCollection', function() {
+			var app = new IDLApp().init('google.com');
 			c.add(app);
-			var app2 = new IDLApp();
-			app2.init('google.com');
-			app2.icon = '1234';
-			c.add(app2);
-			c.apps.should.have.property(app.title);
-			c.apps[app.title].icon.should.not.be.equal('1234');
+			c.apps.should.have.property(app.url, app);
+
+			var c2 = new IDLCollection();
+			c2.apps.should.not.have.property(app.url);
 		});
+
 	});
 });

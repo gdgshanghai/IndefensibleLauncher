@@ -3,6 +3,7 @@ var IDLApp = function() {
 	this.url = '';
 	this.initial = '';
 	this.icon = '';
+	this.collection = [];
 };
 
 IDLApp.load = function(app) {
@@ -31,82 +32,102 @@ IDLApp.prototype.render = function() {
 	return ret;
 };
 
-IDLCollection = function(title) {
-	this.title = title || '';
-	this.apps = {};
-};
+// var Collection = function() {
+// 	this.apps = {};
+// };
 
-IDLCollection.load = function(collection) {
-	var col = new IDLCollection();
-	for (var attr in collection) {
-		if (attr === 'apps') {
-			var apps = collection[attr];
-			for (var name in apps) {
-				col.add(IDLApp.load(apps[name]));
-			}
-		} else {
-			col[attr] = collection[attr];
-		}
-	}
-	return col;
-}
+// Collection.prototype.add = function(app) {
+// 	var key = app.url;
+// 	this.apps[key] = app;
+// 	return this;
+// };
 
-IDLCollection.prototype.add = function(app) {
-	var title = app.title;
-	if (!this.apps.hasOwnProperty(title)) {
-		this.apps[title] = app;
-	}
-	return this;
-};
+// var IDLCollection = function(title) {
+// 	this.title = title || '';
+// 	this.apps = {};
+// };
 
-IDLCollection.prototype.save = function(callback) {
-	AllCollection.save(this);
-};
+// IDLCollection.prototype = (function() {
+// 	var C = new Collection();
+// 	return Object.create(C)
+// })();
 
-IDLCollection.prototype.render = function() {
-	var listDomStr = '';
-	for (var title in this.apps) {
-		listDomStr += this.apps[title].render();
-	}
-	var tmpl = $('#catalogue-tmpl').get(0).innerHTML,
-		ret = tmpl.replace(/%catalogueName%/g, this.title).replace(/%iconsDomStr%/g, listDomStr);
-	return ret;
-};
+// IDLCollection.load = function(colData) {
+// 	var col = new IDLCollection();
+// 	for (var attr in colData) {
+// 		if (attr === 'apps') {
+// 			var apps = colData[attr];
+// 			for (var name in apps) {
+// 				col.add(IDLApp.load(apps[name]));
+// 			}
+// 		} else {
+// 			col[attr] = colData[attr];
+// 		}
+// 	}
+// 	return col;
+// };
 
-var AllCollection = {
-	dbname: 'IDLCollections',
-	inited: false,
-	collections: {},
+// IDLCollection.prototype.save = function(callback) {
+// 	AllIDLCollection.save(this);
+// };
 
-	len: function() {
-		var i = 0;
-		for (var key in this.collections) {
-			i++;
-		}
-		return i;
-	},
+// IDLCollection.prototype.render = function() {
+// 	var listDomStr = '';
+// 	for (var title in this.apps) {
+// 		listDomStr += this.apps[title].render();
+// 	}
+// 	var tmpl = $('#catalogue-tmpl').get(0).innerHTML,
+// 		ret = tmpl.replace(/%catalogueName%/g, this.title).replace(/%iconsDomStr%/g, listDomStr);
+// 	return ret;
+// };
 
-	init: function() {
-		DB.loadDB(this.dbname, function(db) {
-			for (var colTitle in db) {
-				this.collections[colTitle] = IDLCollection.load(db[colTitle]);
-			}
-			this.inited = true;
-		}.bind(this));
-	},
+// var AZCollection = function(initial) {
+// 	this.initial = initial || '';
+// 	this.apps = {};
+// };
 
-	save: function(collection, callback) {
-		if (typeof collection !== 'undefined') {
-			this.collections[collection.title] = collection;
-		}
-		DB.saveDB(this.dbname, this.collections, callback);
-	},
+// IDLCollection.prototype = new Collection();
 
-	find: function(title) {
-		return this.collections[title] || {};
-	},
+// var AllCollection = function(dbname) {
+// 	if (typeof dbname !== 'string' && dbname !== '') {
+// 		throw ('[new AllCollection] invalid dbname');
+// 	}
+// 	this.dbname = dbname;
+// 	this.inited = false;
+// 	this.collections = {};
+// };
 
-	findAll: function() {
-		return this.collections;
-	}
-};
+// AllCollection.prototype.len = function() {
+// 	var i = 0;
+// 	for (var key in this.collections) {
+// 		i++;
+// 	}
+// 	return i;
+// };
+
+// AllCollection.prototype.init = function() {
+// 	DB.loadDB(this.dbname, function(db) {
+// 		for (var colTitle in db) {
+// 			this.collections[colTitle] = IDLCollection.load(db[colTitle]);
+// 		}
+// 		this.inited = true;
+// 	}.bind(this));
+// };
+
+// AllCollection.prototype.save = function(collection, callback) {
+// 	if (typeof collection !== 'undefined') {
+// 		this.collections[collection.title] = collection;
+// 	}
+// 	DB.saveDB(this.dbname, this.collections, callback);
+// };
+
+// AllCollection.prototype.find = function(title) {
+// 	return this.collections[title] || {};
+// };
+
+// AllCollection.prototype.findAll = function() {
+// 	return this.collections;
+// };
+
+// var AllIDLCollection = new AllCollection('IDLCollections');
+// var AllAZColleciton = new AllCollection('AZCollections');

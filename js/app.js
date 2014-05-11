@@ -122,7 +122,7 @@ var genCatalogueListDomStr = function(topHosts) {
     return '<ul>' + ulStr + '</ul>';
 };
 
-AllCollection.init();
+AllIDLCollection.init();
 
 $(function() {
     MODE = getMode(currentTime());
