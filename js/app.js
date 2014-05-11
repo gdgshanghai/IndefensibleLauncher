@@ -156,16 +156,20 @@ var genCatalogueDom = function(catalogueName, iconsDomStr) {
 
 var genCatalogueListDomStr = function(topHosts) {
     var ulStr = '';
-    $.each(topHosts, function(catalogueName, v) {
+    var apps = topHosts;
+
+    for (var i = 0; i < CATEGORY.length; i++) {
+        var category = CATEGORY[i];
         var listDomStr = '';
-        for (var i = 0; i < v.length; i++) {
-            var domain = v[i],
-                domainName = domain.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
-            listDomStr += genIconWrapperDomStr(domainName, domain);
+        for (var j = 0; j < apps.length; j++) {
+            if (topHosts[j].collections.indexOf(category) != -1) {
+                listDomStr += genIconWrapperDomStr(apps[j].title, apps[j].url);
+            }
         }
         listDomStr += getPlusIconWrapperTmpl();
-        ulStr += genCatalogueDom(catalogueName, listDomStr);
-    });
+        ulStr += genCatalogueDom(category, listDomStr);
+
+    }
     return '<ul>' + ulStr + '</ul>';
 };
 
