@@ -93,10 +93,7 @@ var saveTopCategorizedAppsToChrome = function(data) {
     message('Error: No value specified');
     return;
   }
-  chrome.storage.sync.set({
-    'topCategorizedApps': theValue
-  }, function() {
-    // message('Settings saved');
+  DB.saveDB('topCategorizedApps', theValue, function() {
     console.log('save ok');
   });
 };
@@ -107,10 +104,7 @@ var saveTopHostsToChrome = function(data) {
     message('Error: No value specified');
     return;
   }
-  chrome.storage.sync.set({
-    'topHosts': theValue
-  }, function() {
-    // message('Settings saved');
+  DB.saveDB('topHosts', theValue, function() {
     console.log('save ok');
   });
 };
