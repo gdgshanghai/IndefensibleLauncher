@@ -51,7 +51,7 @@ var loadTopHost = function() {
     DB.loadDB('topHosts', function(data) {
         console.log('data=====>>>>', data);
         $('body').trigger('loadTopHost', {
-            d: data
+            apps: data
         });
     });
     // chrome.storage.sync.get('IDL.topHosts', function(data) {
@@ -85,14 +85,14 @@ var loadAppsByMode = function(mode) {
     });
 };
 
-var getMapFromHostList = function(hosts) {
+var getMapFromApps = function(apps) {
     var map = {};
-    for (var i = 0; i < hosts.length; i++) {
-        var c = hosts[i].charAt(0).toUpperCase();
+    for (var i = 0; i < apps.length; i++) {
+        var c = apps[i].initial;
         if (typeof map[c] === 'undefined') {
             map[c] = [];
         }
-        map[c].push(hosts[i]);
+        map[c].push(apps[i].url);
     }
     return map;
 };
@@ -192,9 +192,9 @@ $(function() {
 
     $('body').on('loadTopHost', function(e, data) {
         console.log('loadTopHost===>>>', data);
-        var topHosts = data.d,
+        var apps = data.apps,
             ulStr = '';
-        var sortedHosts = sortMapKeyByInitial(getMapFromHostList(topHosts))
+        var sortedHosts = sortMapKeyByInitial(getMapFromApps(apps))
         $.each(sortedHosts, function(k, v) {
             var a = '';
             for (var i = 0; i < v.length; i++) {

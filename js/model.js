@@ -18,6 +18,7 @@ IDLApp.prototype.init = function(url, collections) {
 	if (url) {
 		this.url = url;
 		this.title = url.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
+		this.initial = url.charAt(0).toUpperCase();
 	}
 	if (Array.isArray(collections)) {
 		this.collections = collections;
