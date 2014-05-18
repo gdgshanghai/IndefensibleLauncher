@@ -262,6 +262,16 @@ $(function() {
         });
     });
 
+    $('#launcher-2').on('click.showAZ', '.app-collection .icon-add-wrapper', function() {
+        $('#launcher-2').find('.from-az').show();
+    });
+
+    $('#launcher-2 .left-block').on('click.hide', function() {
+        if ($('#launcher-2 .from-az').is(':visible')) {
+            $('#launcher-2').find('.from-az').hide();
+        }
+    });
+
     $('body').on('loadAppsByMode', function(e, data) {
         $('body').removeClass().addClass(MODE + '-bg');
         var apps = data.apps;
