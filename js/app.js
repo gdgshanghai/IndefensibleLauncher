@@ -198,7 +198,7 @@ $(function() {
                 // var icon = '<span class="icon-small"><img src="http://' + v[i] + '/favicon.ico"></span>';
                 var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].title + '.jpg"></span>';
                 var label = '<br><span class="icon-label">' + v[i].title + '</span>';
-                a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i].url + '">' + icon + label + '</a>');
+                a += ('<a class="icon-wrapper" href="http://' + v[i].url + '">' + icon + label + '</a>');
             }
             ulStr += ('<li><span class="initial">' + k + '</span>' + a + '</li>');
         });
@@ -221,7 +221,7 @@ $(function() {
                 for (var i = 0; i < v.length; i++) {
                     var icon = '<span class="icon-small"><img src="../images/icons/' + v[i].title + '.jpg"></span>';
                     var label = '<br><span class="icon-label">' + v[i].title + '</span>';
-                    a += ('<a class="icon-wrapper" target="_blank" href="http://' + v[i].url + '">' + icon + label + '</a>');
+                    a += ('<a class="icon-wrapper" href="http://' + v[i].url + '">' + icon + label + '</a>');
                 }
             });
             $('#launcher-2 .from-az').html(a);
@@ -269,7 +269,7 @@ $(function() {
         for (var i = 0; i < apps.length; i++) {
             var img = '<img src="../images/homepageicons/' + apps[i].title + '.png">',
                 label = '<span class="icon-label">' + apps[i].title + '</span>';
-            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i].url + '"><span class="icon-large">' + img + '</span></a>');
+            ulStr += ('<a class="icon-wrapper" href="http://' + apps[i].url + '"><span class="icon-large">' + img + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
