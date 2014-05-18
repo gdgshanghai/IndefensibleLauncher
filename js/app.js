@@ -61,28 +61,20 @@ var loadCategorizedApps = function() {
             apps: data
         });
     });
-    // chrome.storage.sync.get('topCategorizedApps', function(data) {
-    //     if ($.isEmptyObject(data)) {
-    //         $('body').trigger('loadCategorizedApps', {});
-    //     } else {
-    //         $('body').trigger('loadCategorizedApps', data);
-    //     }
-    // });
 };
 
 var loadAppsByMode = function(mode) {
-    chrome.storage.sync.get('topCategorizedApps', function(data) {
-        if ($.isEmptyObject(data)) {
-            // TODO: categorize apps by local map
-            console.error('load topCategorizedApps failed: empty data');
-            $('body').trigger('loadAppsByMode', {
-                apps: {}
-            });
-        } else {
-            $('body').trigger('loadAppsByMode', {
-                apps: data.topCategorizedApps[mode]
-            });
+    DB.loadDB('topHosts', function(data) {
+        var apps = data;
+        var ret = [];
+        for (var i = 0; i < apps.length; i++) {
+            if (data[i].collections.indexOf(mode) != -1) {
+                ret.push(apps[i]);
+            }
         }
+        $('body').trigger('loadAppsByMode', {
+            apps: ret
+        });
     });
 };
 
@@ -275,9 +267,9 @@ $(function() {
         var apps = data.apps;
         var ulStr = '';
         for (var i = 0; i < apps.length; i++) {
-            var img = '<img src="../images/homepageicons/' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '.png">',
-                label = '<span class="icon-label">' + apps[i].replace(TOP_LEVEL_DOMAIN_PATTERN, '') + '</span>';
-            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i] + '"><span class="icon-large">' + img + '</span></a>');
+            var img = '<img src="../images/homepageicons/' + apps[i].title + '.png">',
+                label = '<span class="icon-label">' + apps[i].title + '</span>';
+            ulStr += ('<a class="icon-wrapper" target="_blank" href="http://' + apps[i].url + '"><span class="icon-large">' + img + '</span></a>');
         }
         ulStr = '<ul>' + ulStr + '</ul>';
         $('#launcher-1 .apps').html(ulStr);
