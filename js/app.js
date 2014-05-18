@@ -259,6 +259,15 @@ $(function() {
                     }
                 }
             });
+            $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
+                containment: 'document',
+                revert: 'invalid',
+                helper: 'clone',
+            });
+            $('.app-collection', '#launcher-2').droppable({
+                accept: '#launcher-2 .from-az .icon-wrapper',
+                hoverClass: 'icon-hover',
+            });
         });
     });
 
