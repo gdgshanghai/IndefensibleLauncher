@@ -259,14 +259,49 @@ $(function() {
                     }
                 }
             });
-            $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .from-az').draggable({
+            $('.icon-wrapper:not(.icon-add-wrapper)', '#launcher-2 .app-collection').draggable({
                 containment: 'document',
                 revert: 'invalid',
-                helper: 'clone',
+                helper: function() {
+                    var collection = $(this).parents('.app-collection').data('collection');
+                    var ret = $(this).clone();
+                    ret.attr('data-collection', collection);
+                    return ret.get(0);
+                },
+                start: function(event, ui) {
+                    $('#launcher-2 .top-trash').show();
+                },
+                stop: function(event, ui) {
+                    $('#launcher-2 .top-trash').hide();
+                }
             });
-            $('.app-collection', '#launcher-2').droppable({
-                accept: '#launcher-2 .from-az .icon-wrapper',
-                hoverClass: 'icon-hover',
+            $('#launcher-2 .top-trash').droppable({
+                accept: '#launcher-2 .app-collection .icon-wrapper',
+                hoverClass: 'hover',
+                drop: function(event, ui) {
+                    var $idlApp = ui.draggable;
+                    var title = $idlApp.find('.icon-label').text();
+                    var appObj = {};
+                    for (var i = 0; i < apps.length; i++) {
+                        if (apps[i].title === title) {
+                            appObj = apps[i];
+                            break;
+                        }
+                    }
+                    var app = IDLApp.load(appObj);
+                    var collection = ui.helper.data('collection');
+                    app.removeCollection(collection);
+                    $idlApp.remove();
+                    for (var i = 0; i < apps.length; i++) {
+                        if (apps[i].title === app.title) {
+                            apps[i] = app;
+                            break;
+                        }
+                    }
+                    DB.saveDB('topHosts', apps, function() {
+                        console.log('remove', collection, 'from', app.title, 'and saved');
+                    });
+                }
             });
         });
     });
