@@ -57,9 +57,11 @@ function saveTopHost() {
     var topHosts = urlArray.slice(0, 20);
     var apps = [];
     for (var i = 0; i < topHosts.length; i++) {
-      var app = new IDLApp();
-      app.init(topHosts[i]);
-      apps.push(app);
+      if (topHosts[i] !== '') {
+        var app = new IDLApp();
+        app.init(topHosts[i]);
+        apps.push(app);
+      }
     }
     console.log('TopHosts:', topHosts);
     console.log('apps:', apps);

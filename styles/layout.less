@@ -265,8 +265,10 @@ body {
         // background: url("../images/default-icon.png") no-repeat center;
         background-color: white;
         img {
-            height: 60px;
-            width: 60px;
+            @i: 16px;
+            height: @i;
+            width: @i;
+            margin: (@r - @i) / 2;
         }
     }
     .icon-add {

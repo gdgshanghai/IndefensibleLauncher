@@ -46,7 +46,8 @@ html
     script#icon-wrapper-tmpl(type="text/template")
       a.icon-wrapper(href="http://%httpUrl%")
         span.icon-small
-          img(src="../images/icons/%domainName%.jpg")
+          //- img(src="../images/icons/%domainName%.jpg")
+          img(src="http://statics.dnspod.cn/proxy_favicon/_/favicon?domain=%httpUrl%")
         br
         span.icon-label %domainName%
 

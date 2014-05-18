@@ -43,6 +43,7 @@ IDLApp.prototype.init = function(url, collections) {
 		this.url = url;
 		this.title = url.replace(TOP_LEVEL_DOMAIN_PATTERN, '');
 		this.initial = url.charAt(0).toUpperCase();
+		this.icon = url + '/favicon.ico';
 	}
 	if (Array.isArray(collections)) {
 		this.collections = collections;
