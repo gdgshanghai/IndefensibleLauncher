@@ -54,15 +54,18 @@ describe('IDLApp', function() {
 
 		it('should correctly add new collection to an app if the app don\'t have the collection', function() {
 			var app = new IDLApp().init('google.com', ['news', 'finance']);
-			app.addCollection('game');
+			var ret = app.addCollection('game');
+			ret.should.be.true;
 			app.collections.length.should.be.equal(3);
 			app.collections.should.containEql('news');
 			app.collections.should.containEql('finance');
 			app.collections.should.containEql('game');
 
 			var app = new IDLApp().init('google.com', ['news', 'finance']);
-			app.addCollection('game');
-			app.addCollection('home');
+			var ret1 = app.addCollection('game');
+			var ret2 = app.addCollection('home');
+			ret1.should.be.true;
+			ret2.should.be.true;
 			app.collections.length.should.be.equal(4);
 			app.collections.should.containEql('news');
 			app.collections.should.containEql('finance');
@@ -73,14 +76,17 @@ describe('IDLApp', function() {
 
 		it('should do nothing if the app do have the collection', function() {
 			var app = new IDLApp().init('google.com', ['news', 'finance']);
-			app.addCollection('news');
+			var ret = app.addCollection('news');
+			ret.should.be.false;
 			app.collections.length.should.be.equal(2);
 			app.collections.should.containEql('news');
 			app.collections.should.containEql('finance');
 
 			var app = new IDLApp().init('google.com', ['news', 'finance']);
-			app.addCollection('news');
-			app.addCollection('home');
+			var ret1 = app.addCollection('news');
+			var ret2 = app.addCollection('home');
+			ret1.should.be.false;
+			ret2.should.be.true;
 			app.collections.length.should.be.equal(3);
 			app.collections.should.containEql('news');
 			app.collections.should.containEql('home');

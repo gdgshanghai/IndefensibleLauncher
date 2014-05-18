@@ -13,7 +13,7 @@ var genRandomCollection = function() {
 	var ret = [];
 	var len = CATEGORY.length;
 	for (var i = 0; i < len; i++) {
-		if (Math.random() * 2 > 1) {
+		if (Math.random() * 100 < 13.75) {
 			ret.push(CATEGORY[i]);
 		}
 	}
@@ -48,6 +48,7 @@ IDLApp.prototype.init = function(url, collections) {
 		this.collections = collections;
 	} else {
 		this.collections = genRandomCollection();
+		// this.collections = [];
 	}
 	return this;
 };
@@ -55,8 +56,9 @@ IDLApp.prototype.init = function(url, collections) {
 IDLApp.prototype.addCollection = function(collection) {
 	if (this.collections.indexOf(collection) === -1) {
 		this.collections.push(collection);
+		return true;
 	}
-	return this;
+	return false;
 };
 
 IDLApp.prototype.removeCollection = function(collection) {

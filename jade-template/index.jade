@@ -69,7 +69,7 @@ html
           img.add-new-app(src="../images/add.png")
 
     script#catalogue-tmpl(type="text/template")
-      li.app-collection
+      li.app-collection(data-collection="%catalogueName%")
         span.initial.categorized-initial
           img(src="../images/%catalogueName%logo.png")
         %iconsDomStr%
